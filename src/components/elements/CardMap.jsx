@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Card, CardHeader, CardContent } from "@mui/material";
+import { Card, CardHeader, CardContent, colors } from "@mui/material";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import { useReadCypher } from "use-neo4j";
 
@@ -32,23 +32,22 @@ function CardMap() {
     point.latitude,
     point.intensity,
   ]);
-  
+
   return (
-    <Card height="100%" width="100%">
+    <Card height="100%" width="100%" sx={{ bgcolor: "whitesmoke" }}>
       <CardHeader
         titleTypographyProps={{ variant: "h7" }}
         title="Peta Deteksi"
         sx={{
-          bgcolor: "#5f5228",
-          color: "white",
-          fontFamily: "Avenir Next Cyr",
+          fontWeight: 600,
+          color: colors.blue.A400,
         }}
       />
 
       <MapContainer
         center={position}
         zoom={4}
-        style={{ height: "480px", width: "960px", maxWidth: '' }}
+        style={{ height: "480px", width: "1200px", maxWidth: "" }}
       >
         <HeatmapLayer
           points={points}

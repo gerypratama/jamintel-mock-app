@@ -5,29 +5,59 @@ import {
   Grid,
   Stack,
   Typography,
+  colors,
 } from "@mui/material";
 import SelectCard from "../components/elements/SelectCard";
 import { useEffect, useState } from "react";
 import CardGraphVis from "../components/elements/CardGraphVis";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
+import CardTable from "../components/elements/CardTable";
+import { buronan } from "../components/dummyFugitives";
+import CardTableTrack from "../components/elements/CardTableTrack";
 
 export default function Networks() {
-  const [buronan, setBuronan] = useState("");
-  const [singleData, setSingleData] = useState(null);
+  const [nama, setNama] = useState(buronan[0].name);
+  const [singleData, setSingleData] = useState(buronan[0]);
+  const listBuronan = buronan.map((item) => item.name);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await fetch(
+  //       `${import.meta.env.VITE_BACKEND_BASE}/informasi-buronan/one-buron`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${Cookies.get("token")}`,
+  //         },
+  //       }
+  //     )
+  //       .then((res) => res.json())
+  //       .then((data) => data && setSingleData(data[0]))
+  //       .catch((err) => alert(err));
+  //   };
+  //   fetchData();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await fetch(
+  //       `${import.meta.env.VITE_BACKEND_BASE}/informasi-buronan/phone-call`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${Cookies.get("token")}`,
+  //         },
+  //       }
+  //     )
+  //       .then((res) => res.json())
+  //       .then((data) => console.log(data))
+  //       .catch((err) => alert(err));
+  //   };
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetch(`${import.meta.env.VITE_BACKEND_BASE}/oneBuron`, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => data && setSingleData(data[0]))
-        .catch((err) => alert(err));
-    };
-    fetchData();
-  }, []);
+    const currentData = buronan.filter((item) => item.name === nama);
+    setSingleData(currentData[0]);
+  }, [nama]);
 
   console.log(singleData);
 
@@ -41,55 +71,39 @@ export default function Networks() {
           <SelectCard
             title="Buronan"
             label="Pilih buronan"
-            value={buronan}
-            onSelectChg={(e) => setBuronan(e.target.value)}
-            itemList={[
-              singleData ? singleData.nama : undefined,
-              "Buronan 1",
-              "Buronan 2",
-            ]}
-            imgUrl="/harun.jpg"
+            value={nama}
+            onSelectChg={(e) => setNama(e.target.value)}
+            itemList={listBuronan}
+            imgUrl={singleData.photoUrl}
             data={singleData}
           />
         </Grid>
 
         <Grid item xs={3}>
-          <Card>
-            <CardHeader
-              title="Keluarga"
-              titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: "#282d33" }}
-            />
-            <CardContent>
-              <Typography>Content coming soon</Typography>
-            </CardContent>
-          </Card>
+          <CardTableTrack
+            data={singleData.relatives.filter(
+              (item) => item.relationship === "Family"
+            )}
+            title="Keluarga"
+          />
         </Grid>
 
         <Grid item xs={3}>
-          <Card>
-            <CardHeader
-              title="Teman"
-              titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: "#282d33" }}
-            />
-            <CardContent>
-              <Typography>Content coming soon</Typography>
-            </CardContent>
-          </Card>
+          <CardTableTrack
+            data={singleData.relatives.filter(
+              (item) => item.relationship === "Friend"
+            )}
+            title="Teman"
+          />
         </Grid>
 
         <Grid item xs={3}>
-          <Card>
-            <CardHeader
-              title="Rekan Kerja"
-              titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: "#282d33" }}
-            />
-            <CardContent>
-              <Typography>Content coming soon</Typography>
-            </CardContent>
-          </Card>
+          <CardTableTrack
+            data={singleData.relatives.filter(
+              (item) => item.relationship === "Colleague"
+            )}
+            title="Rekan"
+          />
         </Grid>
 
         <Grid item xs={6}>
@@ -97,7 +111,7 @@ export default function Networks() {
             <CardHeader
               title="Informasi Media Sosial 1"
               titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: "#282d33" }}
+              sx={{ fontWeight: 700, color: colors.blue.A400 }}
             />
             <CardContent>
               <Typography>Content coming soon</Typography>
@@ -110,7 +124,7 @@ export default function Networks() {
             <CardHeader
               title="Informasi Media Sosial 2"
               titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: "#282d33" }}
+              sx={{ fontWeight: 700, color: colors.blue.A400 }}
             />
             <CardContent>
               <Typography>Content coming soon</Typography>
@@ -119,7 +133,11 @@ export default function Networks() {
         </Grid>
 
         <Grid item xs={6}>
-          <CardGraphVis />
+          <CardGraphVis
+            service="informasi-buronan/graph-profil-buron"
+            height="500px"
+            title="Graph Network"
+          />
         </Grid>
 
         <Grid item xs={6}>
@@ -127,7 +145,7 @@ export default function Networks() {
             <CardHeader
               title="Other Data"
               titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: "#282d33" }}
+              sx={{ fontWeight: 700, color: colors.blue.A400 }}
             />
             <CardContent>
               <Typography>Content coming soon</Typography>

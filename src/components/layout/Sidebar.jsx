@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import "../styles.css";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import {
   PiBinocularsFill,
   PiCellTowerBold,
   PiShareNetworkBold,
   PiSignOutBold,
   PiUsersThreeBold,
+  PiXBold,
 } from "react-icons/pi";
 import { Button } from "@mui/material";
 
@@ -52,7 +53,7 @@ function MenuItem({ isActive, label, icon, onClick }) {
   );
 }
 
-export default function SideBar() {
+export default function SideBar({ onClose, onOutClick }) {
   const [selectedItem, setSelectedItem] = useState(
     sessionStorage.getItem("selectedItem")
   );
@@ -60,6 +61,7 @@ export default function SideBar() {
 
   const handleClick = (item) => {
     setSelectedItem(item.key);
+    onOutClick();
     navigate(`/${item.path}`);
   };
 
@@ -77,19 +79,31 @@ export default function SideBar() {
 
   useEffect(() => {
     selectedItem && sessionStorage.setItem("selectedItem", selectedItem);
-    const currentIdx = sessionStorage.getItem("selectedItem");
-    console.log(selectedItem);
-    console.log(currentIdx);
   }, [selectedItem]);
 
   return (
-    <div className="sidebar">
-      <div className="sidebar-content">
-        <img className="image" alt="Image" src="kejagung.svg" />
-        <p className="div">Kejaksaan Agung</p>
-        <div className="text-wrapper">Republik Indonesia</div>
-        <div className="frame">
-          <div className="text-wrapper-2">MENU</div>
+    <Box p={3} width="18vw" position="relative">
+      <IconButton
+        onClick={onClose}
+        sx={{ position: "absolute", top: 10, right: 10 }}
+      >
+        <PiXBold size={24} />
+      </IconButton>
+      <Stack gap={5} alignItems="center" mt={8}>
+        <Stack gap={1} alignItems="center">
+          <img
+            src="kejagung.svg"
+            alt="logo kejagung"
+            style={{ height: 133, objectFit: "contain" }}
+          />
+          <Typography variant="h5" color="#058039" fontWeight={600} fontFamily='Roboto'>
+            Kejaksaan Agung
+          </Typography>
+          <Typography variant="h6" color="#058039" fontWeight={600} fontFamily='Roboto'>
+            Republik Indonesia
+          </Typography>
+        </Stack>
+        <Stack width="100%">
           {MENU_ITEMS.map((item) => (
             <MenuItem
               key={item.key}
@@ -105,8 +119,8 @@ export default function SideBar() {
             icon={<PiSignOutBold />}
             onClick={handleLogout}
           />
-        </div>
-      </div>
-    </div>
+        </Stack>
+      </Stack>
+    </Box>
   );
 }

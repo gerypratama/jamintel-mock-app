@@ -6,6 +6,7 @@ import {
   Grid,
   Stack,
   Typography,
+  colors,
 } from "@mui/material";
 import { useState } from "react";
 import SelectCard from "../components/elements/SelectCard";
@@ -36,6 +37,7 @@ export default function Wiretapping() {
               <CardHeader
                 title="Suspected Numbers"
                 titleTypographyProps={{ variant: "h7" }}
+                sx={{ fontWeight: 700, color: colors.blue.A400 }}
               />
               <CardContent>
                 <Typography>Content coming soon</Typography>
@@ -45,7 +47,11 @@ export default function Wiretapping() {
         </Grid>
 
         <Grid item xs={12}>
-          <CardGraphVis />
+          <CardGraphVis
+            service="informasi-buronan/graph-profil-buron"
+            height="600px"
+            title="Graph Network"
+          />
         </Grid>
       </Grid>
     </Stack>

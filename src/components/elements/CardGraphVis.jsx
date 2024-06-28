@@ -1,25 +1,37 @@
 import { useEffect, useState } from "react";
 import Graph from "react-vis-network-graph";
-import { Card, CardHeader, Container } from "@mui/material";
-import { useReadCypher } from "use-neo4j";
+import { Card, CardHeader, Container, Typography, colors } from "@mui/material";
+import Cookies from "js-cookie";
+import { Title } from "chart.js";
 
-const CardGraphVis = () => {
-  const query =
-    "match p=(n)--(m) where n.suspect is not null and m.suspect is not null return p";
+const CardGraphVis = ({
+  service,
+  height,
+  title,
+  bgCol = undefined,
+  headerCol = undefined,
+}) => {
+  const [data, setData] = useState(null);
 
-  const { run, records, first, result } = useReadCypher(query);
-  const [graph, setGraph] = useState({
-    // nodes: records.get("nodes"),
-    // edges: records.get("relationships"),
-  });
+  const graph = data && {
+    nodes: data.nodes,
+    edges: data.edges,
+
+  };
 
   useEffect(() => {
-    run();
+    const fetchGraph = async () => {
+      const url = import.meta.env.VITE_BACKEND_BASE + "/" + service;
+      await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((obj) => setData(obj));
+    };
+    fetchGraph();
   }, []);
-
-  useEffect(() => {
-    setGraph();
-  }, [records]);
 
   const events = {
     select: function (event) {
@@ -29,32 +41,49 @@ const CardGraphVis = () => {
 
   const options = {
     layout: {
-      hierarchical: true,
+      hierarchical: false,
     },
     edges: {
       color: "#000000",
     },
-    height: "500px",
+    nodes: {
+      // shape: "image",
+      // image: "https://upload.wikimedia.org/wikipedia/commons/2/24/IBM_Cloud_logo.png",
+      size: 25,
+      font: {
+        color: "rgb(51, 51, 51)",
+        size: 12,
+        face: "Nunito Sans, sans-serif",
+      },
+      imagePadding: 10,
+    },
+    height: height,
   };
 
+  // console.log(graph);
+
   return (
-    <Card height="100%" width="100%">
+    <Card width="100%" sx={{ bgcolor: bgCol ? bgCol : "#f8fcfe" }}>
       <CardHeader
         titleTypographyProps={{ variant: "h7" }}
-        title="Suspect Journey"
-        sx={{ fontWeight: 700, color: "#282d33" }}
+        title={title}
+        sx={{
+          fontWeight: 700,
+          color: headerCol ? headerCol : colors.blue.A400,
+        }}
       />
-      <Container sx={{ width: "100%", bgcolor: "#f9fdfe", overflow: "hidden" }}>
-        <img
+      <Container sx={{ width: "100%" }}>
+        {data ? (
+          <Graph graph={graph} options={options} events={events} />
+        ) : (
+          <Typography mb={2}>Fetching graph failed</Typography>
+        )}
+        {/* <img
           src="/graph_placeholder_white.png"
-          alt="graph placeholder"
-          style={{
-            objectFit: "contain",
-            width: "100%",
-          }}
-        />
+          alt="placeholder"
+          style={{ height: 500 }}
+        /> */}
       </Container>
-      {/* <Graph graph={graph} options={options} events={events} /> */}
     </Card>
   );
 };
