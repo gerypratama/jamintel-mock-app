@@ -38,24 +38,6 @@ export default function Overview() {
     onlineLog.filter((item) => item.email_address === email)
   );
   const listBuronan = buronan.map((item) => item.name);
-  console.log(dummyCalls);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await fetch(
-  //       `${import.meta.env.VITE_BACKEND_BASE}/informasi-buronan/one-buron`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${Cookies.get("token")}`,
-  //         },
-  //       }
-  //     )
-  //       .then((res) => res.json())
-  //       .then((data) => data && setSingleData(data[0]))
-  //       .catch((err) => alert(err));
-  //   };
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     const currentData = buronan.filter((item) => item.name === nama);
@@ -100,7 +82,7 @@ export default function Overview() {
         Informasi Buronan
       </Typography>
       <Grid container spacing={3} p={2} justifyContent="center">
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <SelectCard
             title="Buronan"
             label="Pilih buronan"
@@ -112,83 +94,60 @@ export default function Overview() {
           />
         </Grid>
 
-        <Grid item xs={9}>
-          <CardGraphVis
-            service="informasi-buronan/graph-profil-buron"
-            height="468px"
-            title="Profil Buronan"
-          />
-        </Grid>
+        <Grid item xs={8}>
+          <Grid container spacing={3} justifyContent="center">
+            <Grid item xs={12}>
+              <CardGraphVis
+                service="informasi-buronan/graph-profil-buron"
+                height="468px"
+                title="Profil Buronan"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <CardTableTrack
+                data={callData && callData.calls}
+                title="Panggilan Terakhir"
+                label="Pilih No. Telepon"
+                source={phoneNumber}
+                onSelectChg={(e) => setPhoneNumber(e.target.value)}
+                srcList={singleData.phone_number}
+              />
+            </Grid>
 
-        <Grid item xs={3}>
-          <SelectCard
-            title="No. Telepon"
-            label="Pilih No. Telepon"
-            value={phoneNumber}
-            onSelectChg={(e) => setPhoneNumber(e.target.value)}
-            itemList={singleData.phone_number}
-          />
-        </Grid>
+            <Grid item xs={6}>
+              <CardTableTrack
+                data={idData && idData.logs}
+                title="Rekam Jejak"
+                label="Pilih NIK"
+                source={nik}
+                onSelectChg={(e) => setNik(e.target.value)}
+                srcList={singleData.identity_number}
+              />
+            </Grid>
 
-        <Grid item xs={3}>
-          <SelectCard
-            title="NIK"
-            label="Pilih NIK"
-            value={nik}
-            onSelectChg={(e) => setNik(e.target.value)}
-            itemList={singleData.identity_number}
-          />
-        </Grid>
+            <Grid item xs={6}>
+              <CardTableTrack
+                data={trxData && trxData.transactions}
+                title="Transaksi Terakhir"
+                label="Pilih No. Rekening"
+                source={noRek}
+                onSelectChg={(e) => setNoRek(e.target.value)}
+                srcList={singleData.acc_number}
+              />
+            </Grid>
 
-        <Grid item xs={3}>
-          <SelectCard
-            title="No. Rekening"
-            label="Pilih No. Rekening"
-            value={noRek}
-            onSelectChg={(e) => setNoRek(e.target.value)}
-            itemList={singleData.acc_number}
-          />
-        </Grid>
-
-        <Grid item xs={3}>
-          <SelectCard
-            title="Email"
-            label="Pilih Email"
-            value={email}
-            onSelectChg={(e) => setEmail(e.target.value)}
-            itemList={singleData.email}
-          />
-        </Grid>
-
-        {callData && (
-          <Grid item xs={3}>
-            <CardTableTrack data={callData.calls} title="Panggilan Terakhir" />
+            <Grid item xs={6}>
+              <CardTableTrack
+                data={onlineData && onlineData.service_logs}
+                title="Aktivitas Online Terakhir"
+                label="Pilih Email"
+                source={email}
+                onSelectChg={(e) => setEmail(e.target.value)}
+                srcList={singleData.email}
+              />
+            </Grid>
           </Grid>
-        )}
-
-        {idData && (
-          <Grid item xs={3}>
-            <CardTableTrack data={idData.logs} title="Rekam Jejak" />
-          </Grid>
-        )}
-
-        {trxData && (
-          <Grid item xs={3}>
-            <CardTableTrack
-              data={trxData.transactions}
-              title="Transaksi Terakhir"
-            />
-          </Grid>
-        )}
-
-        {onlineData && (
-          <Grid item xs={3}>
-            <CardTableTrack
-              data={onlineData.service_logs}
-              title="Aktivitas Online Terakhir"
-            />
-          </Grid>
-        )}
+        </Grid>
       </Grid>
     </Stack>
   );

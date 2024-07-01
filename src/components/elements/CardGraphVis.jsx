@@ -3,6 +3,7 @@ import Graph from "react-vis-network-graph";
 import { Card, CardHeader, Container, Typography, colors } from "@mui/material";
 import Cookies from "js-cookie";
 import { Title } from "chart.js";
+import { InsertEmoticon } from "@mui/icons-material";
 
 const CardGraphVis = ({
   service,
@@ -14,9 +15,25 @@ const CardGraphVis = ({
   const [data, setData] = useState(null);
 
   const graph = data && {
-    nodes: data.nodes,
+    nodes: data.nodes.map((node) => ({
+      id: node.id,
+      name: node.properties.nama,
+      label:
+        node.properties.nama ||
+        node.properties.ttl ||
+        node.properties.kk ||
+        node.properties.nik ||
+        node.properties.no_cc ||
+        node.properties.no_hp ||
+        node.properties.no_rekening ||
+        node.properties.npwp ||
+        node.properties.email,
+      title: node.label[0],
+      shape: "circularImage",
+      color: node.color,
+      image: node.icon,
+    })),
     edges: data.edges,
-
   };
 
   useEffect(() => {
@@ -47,20 +64,16 @@ const CardGraphVis = ({
       color: "#000000",
     },
     nodes: {
-      // shape: "image",
-      // image: "https://upload.wikimedia.org/wikipedia/commons/2/24/IBM_Cloud_logo.png",
       size: 25,
       font: {
         color: "rgb(51, 51, 51)",
         size: 12,
         face: "Nunito Sans, sans-serif",
       },
-      imagePadding: 10,
+      imagePadding: 12,
     },
     height: height,
   };
-
-  // console.log(graph);
 
   return (
     <Card width="100%" sx={{ bgcolor: bgCol ? bgCol : "#f8fcfe" }}>

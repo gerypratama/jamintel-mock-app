@@ -2,10 +2,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   Table,
   TableBody,
   TableCell,
@@ -15,15 +11,7 @@ import {
 } from "@mui/material";
 import capitalizeStr from "../../utils/capitalizeStr";
 
-export default function CardTableTrack({
-  data,
-  title,
-  label,
-  source,
-  onSelectChg,
-  srcList,
-}) {
-  // console.log(data);
+export default function RelativeTableCard({ data, title }) {
   const headers = data && Object.keys(data[0]);
   return (
     <Card sx={{ bgcolor: "whitesmoke" }}>
@@ -33,23 +21,6 @@ export default function CardTableTrack({
         sx={{ fontWeight: 700, color: colors.blue.A400 }}
       />
       <CardContent sx={{ p: 2, overflowX: "scroll", maxHeight: 360 }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={source}
-            label="Age"
-            onChange={onSelectChg}
-            sx={{ bgcolor: "white" }}
-          >
-            {srcList.map((item) => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
         <Table>
           <TableHead>
             <TableRow>

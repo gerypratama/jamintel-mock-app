@@ -14,6 +14,7 @@ import {
   Typography,
   colors,
 } from "@mui/material";
+import capitalizeStr from "../../utils/capitalizeStr";
 
 export default function SelectCard({
   title,
@@ -62,7 +63,7 @@ export default function SelectCard({
               display: "flex",
               my: 3,
               justifyContent: "center",
-              maxHeight: 186
+              maxHeight: 186,
             }}
           >
             <img
@@ -75,45 +76,23 @@ export default function SelectCard({
         {data && (
           <Table>
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <Typography
-                    fontWeight={500}
-                    color={txtCol ? txtCol : "#282d33"}
-                  >
-                    Nama Lengkap
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ color: txtCol ? txtCol : "#282d33" }}>
-                  {data.name}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Typography
-                    fontWeight={500}
-                    color={txtCol ? txtCol : "#282d33"}
-                  >
-                    Tempat Kelahiran
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ color: txtCol ? txtCol : "#282d33" }}>
-                  {data.birth_place}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <Typography
-                    fontWeight={500}
-                    color={txtCol ? txtCol : "#282d33"}
-                  >
-                    Tanggal Kelahiran
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ color: txtCol ? txtCol : "#282d33" }}>
-                  {data.birth_date}
-                </TableCell>
-              </TableRow>
+              {Object.entries(data)
+                .filter(([key, value]) => key !== "photoUrl")
+                .map(([key, value]) => (
+                  <TableRow key={key}>
+                    <TableCell>
+                      <Typography
+                        fontWeight={500}
+                        color={txtCol ? txtCol : "#282d33"}
+                      >
+                        {capitalizeStr(key)}
+                      </Typography>
+                    </TableCell>
+                    <TableCell sx={{ color: txtCol ? txtCol : "#282d33" }}>
+                      {typeof value === "object" ? typeof value : value}
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         )}

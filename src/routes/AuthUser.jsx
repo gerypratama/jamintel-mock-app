@@ -21,13 +21,12 @@ export default function AuthUser() {
     return <Navigate to="/login" />;
   }
 
-  // useEffect(() => {
-  //   console.log(isOpen);
-  // }, [isOpen]);
-
   return (
     <div style={{ backgroundColor: "#e0e1da", width: "100%" }}>
-      <IconButton onClick={() => setisOpen(true)} sx={{position: 'fixed', top: 10, left: 20}}>
+      <IconButton
+        onClick={() => setisOpen(true)}
+        sx={{ position: "fixed", top: 10, left: 20 }}
+      >
         <PiListBold />
       </IconButton>
       <div

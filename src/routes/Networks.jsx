@@ -14,6 +14,7 @@ import CardGraphVis from "../components/elements/CardGraphVis";
 import CardTable from "../components/elements/CardTable";
 import { buronan } from "../components/dummyFugitives";
 import CardTableTrack from "../components/elements/CardTableTrack";
+import RelativeTableCard from "../components/elements/RelativeTableCard";
 
 export default function Networks() {
   const [nama, setNama] = useState(buronan[0].name);
@@ -67,7 +68,7 @@ export default function Networks() {
         Jaringan Buronan
       </Typography>
       <Grid container spacing={3} p={2} justifyContent="center">
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <SelectCard
             title="Buronan"
             label="Pilih buronan"
@@ -79,78 +80,69 @@ export default function Networks() {
           />
         </Grid>
 
-        <Grid item xs={3}>
-          <CardTableTrack
-            data={singleData.relatives.filter(
-              (item) => item.relationship === "Family"
-            )}
-            title="Keluarga"
-          />
-        </Grid>
+        <Grid item xs={8}>
+          <Grid container spacing={3} justifyContent="center">
+            <Grid item xs={4}>
+              <RelativeTableCard
+                data={singleData.relatives.filter(
+                  (item) => item.relationship === "Family"
+                )}
+                title="Keluarga"
+              />
+            </Grid>
 
-        <Grid item xs={3}>
-          <CardTableTrack
-            data={singleData.relatives.filter(
-              (item) => item.relationship === "Friend"
-            )}
-            title="Teman"
-          />
-        </Grid>
+            <Grid item xs={4}>
+              <RelativeTableCard
+                data={singleData.relatives.filter(
+                  (item) => item.relationship === "Friend"
+                )}
+                title="Teman"
+              />
+            </Grid>
 
-        <Grid item xs={3}>
-          <CardTableTrack
-            data={singleData.relatives.filter(
-              (item) => item.relationship === "Colleague"
-            )}
-            title="Rekan"
-          />
-        </Grid>
+            <Grid item xs={4}>
+              <RelativeTableCard
+                data={singleData.relatives.filter(
+                  (item) => item.relationship === "Colleague"
+                )}
+                title="Rekan"
+              />
+            </Grid>
 
-        <Grid item xs={6}>
-          <Card>
-            <CardHeader
-              title="Informasi Media Sosial 1"
-              titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: colors.blue.A400 }}
-            />
-            <CardContent>
-              <Typography>Content coming soon</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
+            <Grid item xs={6}>
+              <Card>
+                <CardHeader
+                  title="Informasi Media Sosial 1"
+                  titleTypographyProps={{ variant: "h7" }}
+                  sx={{ fontWeight: 700, color: colors.blue.A400 }}
+                />
+                <CardContent>
+                  <Typography>Content coming soon</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
 
-        <Grid item xs={6}>
-          <Card>
-            <CardHeader
-              title="Informasi Media Sosial 2"
-              titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: colors.blue.A400 }}
-            />
-            <CardContent>
-              <Typography>Content coming soon</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
+            <Grid item xs={6}>
+              <Card>
+                <CardHeader
+                  title="Informasi Media Sosial 2"
+                  titleTypographyProps={{ variant: "h7" }}
+                  sx={{ fontWeight: 700, color: colors.blue.A400 }}
+                />
+                <CardContent>
+                  <Typography>Content coming soon</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
 
-        <Grid item xs={6}>
-          <CardGraphVis
-            service="informasi-buronan/graph-profil-buron"
-            height="500px"
-            title="Graph Network"
-          />
-        </Grid>
-
-        <Grid item xs={6}>
-          <Card>
-            <CardHeader
-              title="Other Data"
-              titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: colors.blue.A400 }}
-            />
-            <CardContent>
-              <Typography>Content coming soon</Typography>
-            </CardContent>
-          </Card>
+            <Grid item xs={12}>
+              <CardGraphVis
+                service="informasi-buronan/graph-profil-buron"
+                height="500px"
+                title="Graph Network"
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Stack>
