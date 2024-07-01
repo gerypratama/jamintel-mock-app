@@ -1,13 +1,14 @@
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { Box, Button, Card, CardContent, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
   });
+  const authSuccess = Cookies.get("token");
 
   const navigate = useNavigate();
 
@@ -33,6 +34,10 @@ export default function Login() {
         }
       });
   };
+
+  if (authSuccess) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Box
