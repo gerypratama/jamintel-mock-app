@@ -36,7 +36,7 @@ export default function SelectCard({
         title={title}
         sx={{
           fontWeight: 700,
-          color: headerCol ? headerCol : colors.blue.A400,
+          color: headerCol ? headerCol : '#028f41',
         }}
       />
       <CardContent>

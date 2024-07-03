@@ -78,7 +78,7 @@ export default function Overview() {
 
   return (
     <Stack gap={2} minHeight="100vh" width="100%" p={3}>
-      <Typography variant="h4" pl={2} fontWeight={600} color="#282d33">
+      <Typography variant="h4" pl={2} fontWeight={600} color="#157f1f">
         Informasi Buronan
       </Typography>
       <Grid container spacing={3} p={2} justifyContent="center">

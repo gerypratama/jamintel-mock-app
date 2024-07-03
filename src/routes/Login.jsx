@@ -70,7 +70,21 @@ export default function Login() {
               onChange={(e) =>
                 setLoginData((prev) => ({ ...prev, username: e.target.value }))
               }
-              sx={{ mb: 2 }}
+              sx={{
+                mb: 2,
+                "& label.Mui-focused": {
+                  color: "#028f41",
+                },
+
+                "& .MuiOutlinedInput-root": {
+                  "&:hover fieldset": {
+                    borderColor: "#028f41",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#028f41",
+                  },
+                },
+              }}
               required
             />
             <TextField
@@ -80,13 +94,33 @@ export default function Login() {
               onChange={(e) =>
                 setLoginData((prev) => ({ ...prev, password: e.target.value }))
               }
-              sx={{ mb: 4 }}
+              sx={{
+                mb: 4,
+                "& label.Mui-focused": {
+                  color: "#028f41",
+                },
+
+                "& .MuiOutlinedInput-root": {
+                  "&:hover fieldset": {
+                    borderColor: "#028f41",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#028f41",
+                  },
+                },
+              }}
               required
             />
             <Button
               type="submit"
               variant="contained"
               onClick={(e) => handleSubmit(e)}
+              sx={{
+                bgcolor: "#028f41",
+                "&:hover": {
+                  bgcolor: "#157f1f",
+                },
+              }}
             >
               Login
             </Button>

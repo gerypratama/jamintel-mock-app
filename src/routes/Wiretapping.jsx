@@ -17,7 +17,7 @@ export default function Wiretapping() {
 
   return (
     <Stack gap={2} minHeight="100vh" p={3}>
-      <Typography variant="h4" pl={2} fontWeight={600} color="#282d33">
+      <Typography variant="h4" pl={2} fontWeight={600} color="#157f1f">
         Wiretapping
       </Typography>
       <Grid container spacing={3} p={2} justifyContent="center">
@@ -33,11 +33,11 @@ export default function Wiretapping() {
               onSelectChg={(e) => setData(e.target.value)}
               itemList={["Filter 1", "Filter 2", "Filter 3"]}
             />
-            <Card>
+            <Card sx={{bgcolor: 'whitesmoke'}}>
               <CardHeader
                 title="Suspected Numbers"
                 titleTypographyProps={{ variant: "h7" }}
-                sx={{ fontWeight: 700, color: colors.blue.A400 }}
+                sx={{ fontWeight: 700, color: '#028f41' }}
               />
               <CardContent>
                 <Typography>Content coming soon</Typography>

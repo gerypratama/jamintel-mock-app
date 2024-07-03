@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import Graph from "react-vis-network-graph";
 import { Card, CardHeader, Container, Typography, colors } from "@mui/material";
 import Cookies from "js-cookie";
-import { Title } from "chart.js";
-import { InsertEmoticon } from "@mui/icons-material";
 
 const CardGraphVis = ({
   service,
@@ -24,10 +22,10 @@ const CardGraphVis = ({
         node.properties.kk ||
         node.properties.nik ||
         node.properties.no_cc ||
-        node.properties.no_hp ||
+        typeof node.properties.no_hp ||
         node.properties.no_rekening ||
         node.properties.npwp ||
-        node.properties.email,
+        typeof node.properties.email,
       title: node.label[0],
       shape: "circularImage",
       color: node.color,
@@ -48,6 +46,7 @@ const CardGraphVis = ({
         .then((obj) => setData(obj));
     };
     fetchGraph();
+    console.log(data);
   }, []);
 
   const events = {
@@ -82,7 +81,7 @@ const CardGraphVis = ({
         title={title}
         sx={{
           fontWeight: 700,
-          color: headerCol ? headerCol : colors.blue.A400,
+          color: headerCol ? headerCol : '#028f41',
         }}
       />
       <Container sx={{ width: "100%" }}>

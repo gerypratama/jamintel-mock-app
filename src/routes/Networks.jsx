@@ -64,7 +64,7 @@ export default function Networks() {
 
   return (
     <Stack gap={2} minHeight="100vh" p={3}>
-      <Typography variant="h4" pl={2} fontWeight={600} color="#282d33">
+      <Typography variant="h4" pl={2} fontWeight={600} color="#157f1f">
         Jaringan Buronan
       </Typography>
       <Grid container spacing={3} p={2} justifyContent="center">
@@ -110,11 +110,11 @@ export default function Networks() {
             </Grid>
 
             <Grid item xs={6}>
-              <Card>
+              <Card sx={{bgcolor: 'whitesmoke'}}>
                 <CardHeader
                   title="Informasi Media Sosial 1"
                   titleTypographyProps={{ variant: "h7" }}
-                  sx={{ fontWeight: 700, color: colors.blue.A400 }}
+                  sx={{ fontWeight: 700, color: '#028f41' }}
                 />
                 <CardContent>
                   <Typography>Content coming soon</Typography>
@@ -123,11 +123,11 @@ export default function Networks() {
             </Grid>
 
             <Grid item xs={6}>
-              <Card>
+              <Card sx={{bgcolor: 'whitesmoke'}}>
                 <CardHeader
                   title="Informasi Media Sosial 2"
                   titleTypographyProps={{ variant: "h7" }}
-                  sx={{ fontWeight: 700, color: colors.blue.A400 }}
+                  sx={{ fontWeight: 700, color: '#028f41' }}
                 />
                 <CardContent>
                   <Typography>Content coming soon</Typography>

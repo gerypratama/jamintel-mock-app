@@ -40,7 +40,7 @@ function CardMap() {
         title="Peta Deteksi"
         sx={{
           fontWeight: 600,
-          color: colors.blue.A400,
+          color: '#028f41',
         }}
       />
 

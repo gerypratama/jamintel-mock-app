@@ -40,7 +40,7 @@ export default function CardTable({
       <CardHeader
         title="Keluarga"
         titleTypographyProps={{ variant: "h7" }}
-        sx={{ fontWeight: 700, color: colors.blue.A400 }}
+        sx={{ fontWeight: 700, color: '#028f41' }}
       />
       <CardContent>
         <Table>

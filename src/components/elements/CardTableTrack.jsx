@@ -30,7 +30,7 @@ export default function CardTableTrack({
       <CardHeader
         title={title}
         titleTypographyProps={{ variant: "h7" }}
-        sx={{ fontWeight: 700, color: colors.blue.A400 }}
+        sx={{ fontWeight: 700, color: '#028f41' }}
       />
       <CardContent sx={{ p: 2, overflowX: "scroll", maxHeight: 360 }}>
         <FormControl fullWidth>

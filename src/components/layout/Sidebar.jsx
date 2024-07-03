@@ -46,6 +46,12 @@ function MenuItem({ isActive, label, icon, onClick }) {
         justifyContent: "start",
         textTransform: "capitalize",
         py: 1.5,
+        color: isActive ? "whitesmoke" : "#028f41",
+        bgcolor: isActive ? "#157f1f" : "transparent",
+        "&:hover": {
+          bgcolor: "#4cb963",
+          color: "whitesmoke",
+        },
       }}
     >
       {label}
@@ -96,14 +102,24 @@ export default function SideBar({ onClose, onOutClick }) {
             alt="logo kejagung"
             style={{ height: 133, objectFit: "contain" }}
           />
-          <Typography variant="h5" color="#058039" fontWeight={600} fontFamily='Roboto'>
+          <Typography
+            variant="h5"
+            color="#058039"
+            fontWeight={600}
+            fontFamily="Roboto"
+          >
             Kejaksaan Agung
           </Typography>
-          <Typography variant="h6" color="#058039" fontWeight={600} fontFamily='Roboto'>
+          <Typography
+            variant="h6"
+            color="#058039"
+            fontWeight={600}
+            fontFamily="Roboto"
+          >
             Republik Indonesia
           </Typography>
         </Stack>
-        <Stack width="100%">
+        <Stack width="100%" gap={1}>
           {MENU_ITEMS.map((item) => (
             <MenuItem
               key={item.key}
