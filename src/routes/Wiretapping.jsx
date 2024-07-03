@@ -22,7 +22,11 @@ export default function Wiretapping() {
       </Typography>
       <Grid container spacing={3} p={2} justifyContent="center">
         <Grid item xs={8}>
-          <CardMap />
+          <CardGraphVis
+            service="informasi-buronan/graph-profil-buron"
+            height="400px"
+            title="Graph Network"
+          />
         </Grid>
         <Grid item xs={4}>
           <Stack gap={3}>
@@ -33,11 +37,11 @@ export default function Wiretapping() {
               onSelectChg={(e) => setData(e.target.value)}
               itemList={["Filter 1", "Filter 2", "Filter 3"]}
             />
-            <Card sx={{bgcolor: 'whitesmoke'}}>
+            <Card sx={{ bgcolor: "whitesmoke" }}>
               <CardHeader
                 title="Suspected Numbers"
                 titleTypographyProps={{ variant: "h7" }}
-                sx={{ fontWeight: 700, color: '#028f41' }}
+                sx={{ fontWeight: 700, color: "#028f41" }}
               />
               <CardContent>
                 <Typography>Content coming soon</Typography>
@@ -47,11 +51,7 @@ export default function Wiretapping() {
         </Grid>
 
         <Grid item xs={12}>
-          <CardGraphVis
-            service="informasi-buronan/graph-profil-buron"
-            height="600px"
-            title="Graph Network"
-          />
+          <CardMap />
         </Grid>
       </Grid>
     </Stack>

@@ -1,37 +1,37 @@
-import { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Card, CardHeader, CardContent, colors } from "@mui/material";
-import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
-import { useReadCypher } from "use-neo4j";
+import { useState, useEffect, useRef } from "react";
+import { Card, CardHeader, CardContent, colors, Box } from "@mui/material";
+import mapboxgl from "mapbox-gl";
 
-const position = [-2.4, 117.6];
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
 
-function CardMap() {
-  const [data, setData] = useState([]);
-  const query =
-    "MATCH (n:Kab_Kota) RETURN n.longitude as lon, n.latitude as lat";
-  const { run } = useReadCypher(query);
+function CardMap({ width, height }) {
+  const mapContainer = useRef(null);
+  const [lng, setLng] = useState(106.816);
+  const [lat, setLat] = useState(-6.271);
+  const [zoom, setZoom] = useState(14);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const results = await run();
-      setData(
-        results.records.map((record) => ({
-          longitude: record.get("lon"),
-          latitude: record.get("lat"),
-          intensity: 1,
-        }))
-      );
-    };
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v12",
+      center: [lng, lat],
+      zoom: zoom,
+    });
 
-    fetchData();
+    // Add navigation control (the +/- zoom buttons)
+    map.addControl(new mapboxgl.NavigationControl(), "top-right");
+
+    map.on("move", () => {
+      setLng(map.getCenter().lng.toFixed(6));
+      setLat(map.getCenter().lat.toFixed(6));
+      setZoom(map.getZoom().toFixed(2));
+    });
+
+    console.log(map);
+
+    // Clean up on unmount
+    return () => map.remove();
   }, []);
-
-  const points = data.map((point) => [
-    point.longitude,
-    point.latitude,
-    point.intensity,
-  ]);
 
   return (
     <Card height="100%" width="100%" sx={{ bgcolor: "whitesmoke" }}>
@@ -40,27 +40,23 @@ function CardMap() {
         title="Peta Deteksi"
         sx={{
           fontWeight: 600,
-          color: '#028f41',
+          color: "#028f41",
         }}
       />
 
-      <MapContainer
-        center={position}
-        zoom={4}
-        style={{ height: "480px", width: "1200px", maxWidth: "" }}
-      >
-        <HeatmapLayer
-          points={points}
-          longitudeExtractor={(m) => m[0]}
-          latitudeExtractor={(m) => m[1]}
-          intensityExtractor={(m) => m[2]}
+      <Box width={width} height={600} position="relative">
+        <div
+          ref={mapContainer}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: "full",
+          }}
         />
-
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </MapContainer>
+      </Box>
     </Card>
   );
 }
