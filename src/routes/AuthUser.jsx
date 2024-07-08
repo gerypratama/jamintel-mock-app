@@ -13,7 +13,7 @@ export default function AuthUser() {
   }
 
   return (
-    <Box width="100vw" bgcolor="#B0C2B5">
+    <Box bgcolor="#B0C2B5">
       <Navbar />
       <Container maxWidth="xl" sx={{ mt: 20 }}>
         <Stack>
