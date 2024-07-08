@@ -23,7 +23,7 @@ const DefaultCard = () => {
   }, [meta]);
 
   return (
-    <div ref={defaultCardRef} style={{ maxHeight: maxHeight ? `${maxHeight}px` : '100%', overflowY: 'auto', width: '100%', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem', fontFamily: 'Arial, sans-serif' }}>
+    <div ref={defaultCardRef} style={{ maxHeight: maxHeight ? `${maxHeight}px` : '100%', overflowY: 'auto', width: '100%', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem', fontFamily: 'Arial, sans-serif',padding:'8px' }}>
       <div
         style={{
           fontSize: '16px',
@@ -32,8 +32,8 @@ const DefaultCard = () => {
           fontFamily: 'Arial, sans-serif',
           top: 0,
           backgroundColor: 'white',
-          marginLeft: "18px",
-          marginTop: "8px"
+          marginLeft: "10px",
+        //   marginTop: "8px"
         }}
       >
         <span>Overview</span>
@@ -43,7 +43,7 @@ const DefaultCard = () => {
           maxWidth: '100%',
           overflowX: 'hidden',
           overflowY: 'auto',
-          marginLeft: '18px',
+          marginLeft: '10px',
           marginTop: '16px',
           maxHeight: '90%',
         }}
@@ -60,7 +60,7 @@ const DefaultCard = () => {
           <div style={{ height:"100%", display: 'flex', flexWrap: 'wrap', overflowY: 'auto' }}>
             <button
               style={{
-                backgroundColor: '#B6C0D0',
+                backgroundColor: 'rgb(165, 171, 182)',
                 color: '#fff',
                 borderRadius: '16px',
                 fontSize: '12px',
