@@ -3,8 +3,13 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Container,
   Grid,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
   Typography,
   colors,
 } from "@mui/material";
@@ -17,6 +22,11 @@ import CardTableTrack from "../components/elements/CardTableTrack";
 import { logNik } from "../components/dummyIdLog";
 import { trx } from "../components/dummyTrx";
 import { onlineLog } from "../components/dummyOnlineLog";
+import capitalizeStr from "../utils/capitalizeStr";
+import ProfileCard from "../components/elements/ProfileCard";
+import StyledCard from "../components/elements/StyledCard";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 export default function Overview() {
   const [nama, setNama] = useState(buronan[0].name);
@@ -37,6 +47,10 @@ export default function Overview() {
   const [onlineData, setOnlineData] = useState(
     onlineLog.filter((item) => item.email_address === email)
   );
+  const [dates, setDates] = useState({
+    start: null || dayjs("2020-01-01"),
+    end: null || dayjs("2023-12-31"),
+  });
   const listBuronan = buronan.map((item) => item.name);
 
   useEffect(() => {
@@ -76,25 +90,102 @@ export default function Overview() {
     setOnlineData(currentData[0]);
   }, [email]);
 
+  useEffect(() => {
+    console.log(dayjs(dates.start).month() + 1, dayjs(dates.start).year());
+    console.log(dayjs(dates.end).month() + 1, dayjs(dates.end).year());
+  }, [dates]);
+
   return (
-    <Stack gap={2} minHeight="100vh" width="100%" p={3}>
-      <Typography variant="h4" pl={2} fontWeight={600} color="#157f1f">
-        Informasi Buronan
-      </Typography>
-      <Grid container spacing={3} p={2} justifyContent="center">
-        <Grid item xs={4}>
-          <SelectCard
-            title="Buronan"
-            label="Pilih buronan"
-            value={nama}
-            onSelectChg={(e) => setNama(e.target.value)}
-            itemList={listBuronan}
-            imgUrl={singleData.photoUrl}
-            data={singleData}
-          />
+    <Stack gap={2} minHeight="100vh" width="100%">
+      <Grid container spacing={3} p={2} columns={12} justifyContent="center">
+        <Grid item xs={3}>
+          {singleData && <ProfileCard data={singleData} />}
         </Grid>
 
-        <Grid item xs={8}>
+        <Grid item xs={6}>
+          <Stack gap={2}>
+            <Grid container spacing={3}>
+              <Grid item xs={6}>
+                <StyledCard title={"Start Date"}>
+                  <DatePicker
+                    label={"Pick date"}
+                    views={["month", "year"]}
+                    value={dates.start}
+                    onChange={(newValue) =>
+                      setDates((prev) => ({ ...prev, start: newValue }))
+                    }
+                    sx={{ bgcolor: "white" }}
+                  />
+                </StyledCard>
+              </Grid>
+              <Grid item xs={6}>
+                <StyledCard title={"End Date"}>
+                  <DatePicker
+                    label={"Pick date"}
+                    views={["month", "year"]}
+                    value={dates.end}
+                    onChange={(newValue) =>
+                      setDates((prev) => ({ ...prev, end: newValue }))
+                    }
+                    sx={{ bgcolor: "white" }}
+                  />
+                </StyledCard>
+              </Grid>
+            </Grid>
+            <CardGraphVis
+              service="informasi-buronan/graph-profil-buron??nik=3174010102700009&no_hp=081181234455&no_rek=2907991604&start_date=2020-01&end_date=2021-12&email1=harunmasiku@example.com&n_kontak1=086899169400&tgl_cctv=2020-11-23"
+              height="462px"
+              title="Profil Buronan"
+            />
+          </Stack>
+        </Grid>
+
+        <Grid item xs={3}>
+          <Stack gap={2}>
+            <SelectCard
+              title="NIK"
+              label="Pilih NIK"
+              value={nik}
+              onSelectChg={(e) => setNik(e.target.value)}
+              itemList={singleData.identity_number}
+              bgCol="#33714E"
+              txtCol="white"
+              headerCol="white"
+            />
+            <SelectCard
+              title="No. Kontak"
+              label="Pilih No. Kontak"
+              value={phoneNumber}
+              onSelectChg={(e) => setPhoneNumber(e.target.value)}
+              itemList={singleData.phone_number}
+              bgCol="#33714E"
+              txtCol="white"
+              headerCol="white"
+            />
+            <SelectCard
+              title="Email"
+              label="Pilih Email"
+              value={email}
+              onSelectChg={(e) => setEmail(e.target.value)}
+              itemList={singleData.email}
+              bgCol="#33714E"
+              txtCol="white"
+              headerCol="white"
+            />
+            <SelectCard
+              title="No. Rekening"
+              label="Pilih No. Rekening"
+              value={noRek}
+              onSelectChg={(e) => setNoRek(e.target.value)}
+              itemList={singleData.acc_number}
+              bgCol="#33714E"
+              txtCol="white"
+              headerCol="white"
+            />
+          </Stack>
+        </Grid>
+
+        {/* <Grid item xs={8}>
           <Grid container spacing={3} justifyContent="center">
             <Grid item xs={12}>
               <CardGraphVis
@@ -147,7 +238,7 @@ export default function Overview() {
               />
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Stack>
   );

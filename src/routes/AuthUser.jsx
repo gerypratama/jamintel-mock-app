@@ -1,66 +1,43 @@
 import Cookies from "js-cookie";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
-import Sidebar from "../components/layout/Sidebar";
-import {
-  Box,
-  Container,
-  Drawer,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { PiListBold, PiXBold } from "react-icons/pi";
-import { useEffect, useState } from "react";
+import { Box, Button, Container, Stack } from "@mui/material";
+import { navLinks } from "../constants/navLinks";
 
 export default function AuthUser() {
-  const [isOpen, setisOpen] = useState(false);
   const authSuccess = Cookies.get("token");
+  const navigate = useNavigate();
 
   if (!authSuccess) {
     return <Navigate to="/login" />;
   }
 
   return (
-    <div style={{ backgroundColor: "#e0e1da", width: "100%" }}>
-      <IconButton
-        onClick={() => setisOpen(true)}
-        sx={{ position: "fixed", top: 10, left: 20 }}
-      >
-        <PiListBold />
-      </IconButton>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-        }}
-      >
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-          alignItems="center"
-          width="5vw"
-          minHeight="100vh"
-          bgcolor="whitesmoke"
-          p={3}
-        ></Box>
-        <Drawer open={isOpen} onClose={() => setisOpen(false)}>
-          <Sidebar
-            onClose={() => setisOpen(false)}
-            onOutClick={() => setisOpen(false)}
-          />
-        </Drawer>
-        {/* <Sidebar /> */}
-        <div
-          style={{
-            width: "100%",
-          }}
-        >
-          {/* <Navbar /> */}
+    <Box bgcolor="#B0C2B5">
+      <Navbar />
+      <Container maxWidth="xl" sx={{ mt: 20 }}>
+        <Stack>
+          <Stack direction="row">
+            {navLinks.map((link) => (
+              <Button
+                key={link.key}
+                onClick={() => navigate(`/${link.path}`)}
+                sx={{
+                  border: "3px solid transparent",
+                  color: "#33714E",
+                  "&:hover": {
+                    bgcolor: "transparent",
+                    borderBottomColor: "#33714E",
+                  },
+                }}
+              >
+                {link.label}
+              </Button>
+            ))}
+          </Stack>
           <Outlet />
-        </div>
-      </div>
-    </div>
+        </Stack>
+      </Container>
+    </Box>
   );
 }

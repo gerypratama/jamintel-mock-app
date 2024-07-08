@@ -1,9 +1,10 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { Neo4jProvider, createDriver } from "use-neo4j";
 import { BrowserRouter } from "react-router-dom";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const driver = createDriver(
   "neo4j",
@@ -14,9 +15,11 @@ const driver = createDriver(
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <Neo4jProvider driver={driver} database="jamintel2">
+  <Neo4jProvider driver={driver} database="jamintel2">
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </Neo4jProvider>
+    </LocalizationProvider>
+  </Neo4jProvider>
 );

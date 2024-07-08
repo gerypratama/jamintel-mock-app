@@ -16,14 +16,11 @@ export default function Wiretapping() {
   const [data, setData] = useState("");
 
   return (
-    <Stack gap={2} minHeight="100vh" p={3}>
-      <Typography variant="h4" pl={2} fontWeight={600} color="#157f1f">
-        Wiretapping
-      </Typography>
+    <Stack gap={2} minHeight="100vh">
       <Grid container spacing={3} p={2} justifyContent="center">
         <Grid item xs={8}>
           <CardGraphVis
-            service="informasi-buronan/graph-profil-buron"
+            service="informasi-buronan/graph-profil-buron??nik=3174010102700009&no_hp=081181234455&no_rek=2907991604&start_date=2020-01&end_date=2021-12&email1=harunmasiku@example.com&n_kontak1=086899169400&tgl_cctv=2020-11-23"
             height="400px"
             title="Graph Network"
           />
