@@ -77,10 +77,7 @@ export default function Overview() {
   }, [email]);
 
   return (
-    <Stack gap={2} minHeight="100vh" width="100%" p={3}>
-      <Typography variant="h4" pl={2} fontWeight={600} color="#157f1f">
-        Informasi Buronan
-      </Typography>
+    <Stack gap={2} minHeight="100vh" width="100%">
       <Grid container spacing={3} p={2} justifyContent="center">
         <Grid item xs={4}>
           <SelectCard
