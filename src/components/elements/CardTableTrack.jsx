@@ -14,6 +14,8 @@ import {
   colors,
 } from "@mui/material";
 import capitalizeStr from "../../utils/capitalizeStr";
+import { useSelector } from "react-redux";
+import { selectGraphData } from "../../slice/graphSlice";
 
 export default function CardTableTrack({
   data,

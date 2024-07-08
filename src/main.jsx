@@ -14,11 +14,9 @@ const driver = createDriver(
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <Neo4jProvider driver={driver} database="jamintel2">
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </Neo4jProvider>
-  </React.StrictMode>
 );
