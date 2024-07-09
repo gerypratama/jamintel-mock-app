@@ -102,7 +102,7 @@ export default function Overview() {
           {singleData && <ProfileCard data={singleData} />}
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={7}>
           <Stack gap={2}>
             <Grid container spacing={3}>
               <Grid item xs={6}>
@@ -140,7 +140,7 @@ export default function Overview() {
           </Stack>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <Stack gap={2}>
             <SelectCard
               title="NIK"

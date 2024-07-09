@@ -1,0 +1,101 @@
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+
+export default function SearchBar() {
+  const [buronan, setBuronan] = useState([]);
+  const [namaBuronan, setNamaBuronan] = useState("");
+
+  useEffect(() => {
+    const url = `${
+      import.meta.env.VITE_BACKEND_BASE
+    }/informasi-buronan/one-buron`;
+
+    console.log(url);
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        const data = res.data;
+        // const listBuron = data && data.map((item) => item.nama);
+        setBuronan((prev) => [...prev, ...data]);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => console.log(buronan));
+  }, []);
+
+  useEffect(() => {
+    if (namaBuronan !== "") {
+      sessionStorage.setItem("namaBuron", namaBuronan);
+      if (buronan.length > 0) {
+        sessionStorage.setItem("listBuron", JSON.stringify(buronan));
+      }
+    }
+  }, [namaBuronan]);
+
+  console.log(buronan);
+
+  return (
+    <Box bgcolor="#BDCBBF" color="white" p={3}>
+      <Container maxWidth="xl">
+        <Grid
+          container
+          columns={16}
+          // gap={2}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Grid item xs={12}>
+            <FormControl size="small" fullWidth sx={{ bgcolor: "white" }}>
+              <InputLabel id="select-buron-label">Pilih Buronan</InputLabel>
+              <Select
+                labelId="select-buron-label"
+                id="select-buron"
+                value={namaBuronan}
+                label="Nama buronan"
+                onChange={(e) => setNamaBuronan(e.target.value)}
+              >
+                {buronan.length > 0 &&
+                  buronan.map((buron) => (
+                    <MenuItem key={buron.nik} value={buron.nama}>
+                      {buron.nama}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={3}>
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{
+                textTransform: "capitalize",
+                fontWeight: 600,
+                color: "#353229",
+                bgcolor: "#E4C64D",
+                "&:hover": { bgcolor: "#F6EFC5" },
+              }}
+            >
+              Search
+            </Button>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  );
+}
