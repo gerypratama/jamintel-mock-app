@@ -16,14 +16,15 @@ export default function Overview() {
     "informasi-buronan/graph-profil-buron?nik=3174010102700009&no_hp=081181234455&no_rek=2907991604&start_date=2020-01&end_date=2021-12&email1=harunmasiku@example.com&n_kontak1=086899169400&tgl_cctv=2020-11-23"
   );
   const [dates, setDates] = useState({
-    start: dayjs("2019-01-01"),
-    end: dayjs("2020-12-31"),
+    start: dayjs("2020-01-01"),
+    end: dayjs("2021-12-31"),
   });
   const [graphParams, setGraphParams] = useState({
     nik: "",
     no_hp: "",
     no_rek: "",
     email: "",
+    tgl_cctv: "2020-11-23",
     start_date: `${dayjs(dates.start).year().toString()}-${(
       dayjs(dates.start).month() + 1
     ).toString()}`,
