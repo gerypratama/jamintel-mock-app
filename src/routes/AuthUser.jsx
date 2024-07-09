@@ -15,9 +15,9 @@ export default function AuthUser() {
   return (
     <Box bgcolor="#B0C2B5">
       <Navbar />
-      <Container maxWidth="xl" sx={{ mt: 20 }}>
+      <Container maxWidth="xl" sx={{ mt: 18, pt: 3 }}>
         <Stack>
-          <Stack direction="row">
+          <Stack direction="row" px={1}>
             {navLinks.map((link) => (
               <Button
                 key={link.key}

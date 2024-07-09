@@ -1,14 +1,10 @@
 import {
   AppBar,
   Box,
-  Button,
-  FormControl,
-  Grid,
+  Container,
   IconButton,
-  InputLabel,
   Menu,
   MenuItem,
-  Select,
   Stack,
   Typography,
 } from "@mui/material";
@@ -16,6 +12,7 @@ import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "../elements/SearchBar";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,8 +26,8 @@ export default function Navbar() {
   };
 
   return (
-    <Stack>
-      <AppBar sx={{ bgcolor: "#33714E", boxShadow: "none" }}>
+    <AppBar sx={{ bgcolor: "#33714E", boxShadow: "none" }}>
+      <Container maxWidth="xl">
         <Box
           display="flex"
           justifyContent="space-between"
@@ -70,49 +67,8 @@ export default function Navbar() {
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Box>
-        <Box bgcolor="#BDCBBF" color="white" p={3}>
-          <Grid
-            container
-            columns={16}
-            // gap={2}
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Grid item xs={12}>
-              <FormControl size="small" fullWidth sx={{ bgcolor: "white" }}>
-                <InputLabel id="select-buron-label">Pilih Buronan</InputLabel>
-                <Select
-                  labelId="select-buron-label"
-                  id="select-buron"
-                  // value={age}
-                  label="Nama buronan"
-                  // onChange={handleChange}
-                >
-                  <MenuItem sx={{ bgcolor: "transparent" }}>Ten</MenuItem>
-                  <MenuItem sx={{ bgcolor: "transparent" }}>Twenty</MenuItem>
-                  <MenuItem sx={{ bgcolor: "transparent" }}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={3}>
-              <Button
-                variant="contained"
-                fullWidth
-                sx={{
-                  textTransform: "capitalize",
-                  fontWeight: 600,
-                  color: "#353229",
-                  bgcolor: "#E4C64D",
-                  "&:hover": { bgcolor: "#F6EFC5" },
-                }}
-              >
-                Search
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
-      </AppBar>
-    </Stack>
+      </Container>
+      <SearchBar />
+    </AppBar>
   );
 }
