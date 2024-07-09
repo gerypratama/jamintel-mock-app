@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Graph from "react-vis-network-graph";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardHeader, Container, Typography, Box } from "@mui/material";
+import { Card, CardHeader, Container, Box, CircularProgress } from "@mui/material";
 import Cookies from "js-cookie";
 import axios from "axios";
 import ToggleOptionGraph from "./ToogleOptionGraph";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import "../../assets/style/stylegraph.css";
 import {
   selectGraphData,
@@ -39,30 +40,31 @@ const CardGraphVis = ({
   const [network, setNetwork] = useState(null);
   const [physicsEnabled, setPhysicsEnabled] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
+  const [loading, setLoading] = useState(true); // State untuk loading
   const graphData = useSelector(selectGraphData);
-  console.log("selected node=", selectedNode, "selected edge=", selectedEdge);
-  console.log(selectedRightClickNode);
-  console.log(graphData)
-  console.log(selectedRightClickNodePosition);
+
+  const fetchGraph = async () => {
+    const url = import.meta.env.VITE_BACKEND_BASE + "/" + service;
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.data) {
+        console.log(response.data);
+        setPhysicsEnabled(true);
+        dispatch(setGraphData(response.data));
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error fetching graph data:", error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchGraph = async () => {
-      const url = import.meta.env.VITE_BACKEND_BASE + "/" + service;
-      try {
-        const response = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
-            "Content-Type": "application/json",
-          },
-        });
-        if (response.data) {
-          console.log(response.data);
-          dispatch(setGraphData(response.data));
-        }
-      } catch (error) {
-        console.error("Error fetching graph data:", error);
-      }
-    };
     fetchGraph();
   }, []);
 
@@ -198,7 +200,6 @@ const CardGraphVis = ({
     setCollapsed(!collapsed);
   };
 
-
   return (
     <Card width="100%" sx={{ bgcolor: bgCol ? bgCol : "#f8fcfe" }}>
       <CardHeader
@@ -210,7 +211,11 @@ const CardGraphVis = ({
         }}
       />
       <Container sx={{ width: "100%" }}>
-        {graphData ? (
+        {loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" height={height}>
+            <CircularProgress />
+          </Box>
+        ) : (
           <>
             <Box position="relative">
               <Graph
@@ -222,12 +227,16 @@ const CardGraphVis = ({
                 options={options}
                 getNetwork={(network) => setNetwork(network)}
               />
-              <Box position="absolute" top="0" left="0">
+              <Box position="absolute" top='0' left="0" onClick={fetchGraph} style={{cursor: "pointer" }}>
+                <RestartAltIcon sx={{fontSize: 20, color:"#1976d2"}} />
+              </Box>
+              <Box position="absolute" top="2px" left="30px">
                 <ToggleOptionGraph
                   togglePhysics={togglePhysics}
                   checked={physicsEnabled}
                 />
               </Box>
+              
               <Box
                 position="absolute"
                 top="0"
@@ -269,8 +278,6 @@ const CardGraphVis = ({
               )}
             </Box>
           </>
-        ) : (
-          <Typography mb={2}>Fetching graph failed</Typography>
         )}
       </Container>
     </Card>

@@ -1,3 +1,4 @@
+import { color } from '@mui/system';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -92,8 +93,16 @@ const graphSlice = createSlice({
         image: node.icon || "/default.svg",
         properties: node.properties,
       }));
+      const mappedEdges = data.edges.map((edge) => {
+        return {
+          ...edge,
+          color: { color: "#191919", hover: "#ff1919" },
+          width: 0.5,
+        };
+      });
+    //   const styledEdges = applyEdgeStyles([...state.graphData.edges, ...mappedEdges]);
 
-      const styledEdges = applyEdgeStyles(data.edges);
+      const styledEdges = applyEdgeStyles(mappedEdges);
 
       state.graphData = {
         nodes: mappedNodes,
@@ -187,7 +196,8 @@ const graphSlice = createSlice({
       )).map((edge) => ({
         ...edge,
         length:300,
-        color: { color: '#0080ff' }
+        color: { color: '#0080ff' },
+        width: 4,
       }));
 
       const updatedExistingEdges = state.graphData.edges.map((edge) => {
@@ -195,7 +205,8 @@ const graphSlice = createSlice({
           return {
             ...edge,
             color: { color: '#0080ff' },
-            length:300
+            length:300,
+            width: 4,
           };
         }
         return edge;
