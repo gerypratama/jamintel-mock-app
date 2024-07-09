@@ -126,50 +126,106 @@ const graphSlice = createSlice({
       state.rightClickPosition = action.payload.position;
     },
     expandGraphData: (state, action) => {
-        const newData = action.payload;
-      
-        const newNodes = newData.nodes.filter(newNode => (
-          !state.graphData.nodes.some(existingNode => existingNode.id === newNode.id)
-        ));
-      
-        const mappedNodes = newNodes.map((node) => ({
-          id: node.id,
-          label: node.title,
-          shape: "circularImage",
-          color: node.color || "#B6C0D0",
-          image: node.icon || "/default.svg",
-          properties: node.properties,
-        }));
-      
-        const newEdges = newData.edges.filter(newEdge => (
-          !state.graphData.edges.some(existingEdge => existingEdge.id === newEdge.id)
-        ));
-      
-        const styledEdges = applyEdgeStyles([...state.graphData.edges, ...newEdges]);
-      
-        newNodes.forEach(node => {
-          const label = node.title;
-          state.nodelabelCount[label] = (state.nodelabelCount[label] || 0) + 1;
-        });
-      
-        newEdges.forEach(edge => {
-          const label = edge.label;
-          state.edgeLabelCount[label] = (state.edgeLabelCount[label] || 0) + 1;
-        });
-      
-        state.graphData = {
-          nodes: [...state.graphData.nodes, ...mappedNodes],
-          edges: styledEdges,
-          meta: newData.meta,
-        };
-      
-        state.nodesCount += newNodes.length;
-        state.edgesCount += newEdges.length;
-      },
+      const newData = action.payload;
+
+      const newNodes = newData.nodes.filter(newNode => (
+        !state.graphData.nodes.some(existingNode => existingNode.id === newNode.id)
+      ));
+
+      const mappedNodes = newNodes.map((node) => ({
+        id: node.id,
+        label: node.title,
+        shape: "circularImage",
+        color: node.color || "#B6C0D0",
+        image: node.icon || "/default.svg",
+        properties: node.properties,
+      }));
+
+      const newEdges = newData.edges.filter(newEdge => (
+        !state.graphData.edges.some(existingEdge => existingEdge.id === newEdge.id)
+      ));
+
+      const styledEdges = applyEdgeStyles([...state.graphData.edges, ...newEdges]);
+
+      newNodes.forEach(node => {
+        const label = node.title;
+        state.nodelabelCount[label] = (state.nodelabelCount[label] || 0) + 1;
+      });
+
+      newEdges.forEach(edge => {
+        const label = edge.label;
+        state.edgeLabelCount[label] = (state.edgeLabelCount[label] || 0) + 1;
+      });
+
+      state.graphData = {
+        nodes: [...state.graphData.nodes, ...mappedNodes],
+        edges: styledEdges,
+        meta: newData.meta,
+      };
+
+      state.nodesCount += newNodes.length;
+      state.edgesCount += newEdges.length;
+    },
+    shortestPathGraphData: (state, action) => {
+      const newDataShortestPath = action.payload;
+
+      const newNodes = newDataShortestPath.nodes.filter(newNode => (
+        !state.graphData.nodes.some(existingNode => existingNode.id === newNode.id)
+      ));
+
+      const mappedNodes = newNodes.map((node) => ({
+        id: node.id,
+        label: node.title,
+        shape: "circularImage",
+        color: node.color || "#B6C0D0",
+        image: node.icon || "/default.svg",
+        properties: node.properties,
+      }));
+
+      const newEdges = newDataShortestPath.edges.filter(newEdge => (
+        !state.graphData.edges.some(existingEdge => existingEdge.id === newEdge.id)
+      )).map((edge) => ({
+        ...edge,
+        length:300,
+        color: { color: '#0080ff' }
+      }));
+
+      const updatedExistingEdges = state.graphData.edges.map((edge) => {
+        if (newDataShortestPath.edges.some(newEdge => newEdge.id === edge.id)) {
+          return {
+            ...edge,
+            color: { color: '#0080ff' },
+            length:300
+          };
+        }
+        return edge;
+      });
+
+      const styledEdges = applyEdgeStyles([...updatedExistingEdges, ...newEdges]);
+
+      newNodes.forEach(node => {
+        const label = node.title;
+        state.nodelabelCount[label] = (state.nodelabelCount[label] || 0) + 1;
+      });
+
+      newEdges.forEach(edge => {
+        const label = edge.label;
+        state.edgeLabelCount[label] = (state.edgeLabelCount[label] || 0) + 1;
+      });
+
+      state.graphData = {
+        nodes: [...state.graphData.nodes, ...mappedNodes],
+        edges: styledEdges,
+        meta: newDataShortestPath.meta,
+      };
+
+      state.nodesCount += newNodes.length;
+      state.edgesCount += newEdges.length;
+    },
   },
 });
 
-export const { setGraphData, setSelectedNode, setSelectedEdge, setRightClickNode, expandGraphData } = graphSlice.actions;
+export const { setGraphData, setSelectedNode, setSelectedEdge, setRightClickNode, expandGraphData, shortestPathGraphData } = graphSlice.actions;
 export const selectGraphData = (state) => state.graph.graphData;
 export const selectSelectedNode = (state) => state.graph.selectedNode;
 export const selectSelectedEdge = (state) => state.graph.selectedEdge;
