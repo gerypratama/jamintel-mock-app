@@ -1,99 +1,98 @@
 import CardGraphVis from "../components/elements/CardGraphVis";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  Grid,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-  colors,
-} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 import { useEffect, useState } from "react";
 import SelectCard from "../components/elements/SelectCard";
-// import Cookies from "js-cookie";
-import { buronan } from "../components/dummyFugitives";
-import { dummyCalls } from "../components/dummyCalls";
-import CardTableTrack from "../components/elements/CardTableTrack";
-import { logNik } from "../components/dummyIdLog";
-import { trx } from "../components/dummyTrx";
-import { onlineLog } from "../components/dummyOnlineLog";
-import capitalizeStr from "../utils/capitalizeStr";
+import Cookies from "js-cookie";
 import ProfileCard from "../components/elements/ProfileCard";
 import StyledCard from "../components/elements/StyledCard";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import axios from "axios";
 
 export default function Overview() {
-  const [nama, setNama] = useState(buronan[0].name);
-  const [nik, setNik] = useState(buronan[0].identity_number[0]);
-  const [noRek, setNoRek] = useState(buronan[0].acc_number[0]);
-  const [phoneNumber, setPhoneNumber] = useState(buronan[0].phone_number[0]);
-  const [email, setEmail] = useState(buronan[0].email[0]);
-  const [singleData, setSingleData] = useState(buronan[0]);
-  const [callData, setCallData] = useState(
-    dummyCalls.filter((item) => item.caller_number === phoneNumber)
-  );
-  const [idData, setIdData] = useState(
-    logNik.filter((item) => item.person_national_id === nik)
-  );
-  const [trxData, setTrxData] = useState(
-    trx.filter((item) => item.acc_number === noRek)
-  );
-  const [onlineData, setOnlineData] = useState(
-    onlineLog.filter((item) => item.email_address === email)
+  const [singleData, setSingleData] = useState(null);
+  const [serviceUrl, setServiceUrl] = useState(
+    "informasi-buronan/graph-profil-buron?nik=3174010102700009&no_hp=081181234455&no_rek=2907991604&start_date=2020-01&end_date=2021-12&email1=harunmasiku@example.com&n_kontak1=086899169400&tgl_cctv=2020-11-23"
   );
   const [dates, setDates] = useState({
-    start: null || dayjs("2020-01-01"),
-    end: null || dayjs("2023-12-31"),
+    start: dayjs("2019-01-01"),
+    end: dayjs("2020-12-31"),
   });
-  const listBuronan = buronan.map((item) => item.name);
+  const [graphParams, setGraphParams] = useState({
+    nik: "",
+    no_hp: "",
+    no_rek: "",
+    email: "",
+    start_date: `${dayjs(dates.start).year().toString()}-${(
+      dayjs(dates.start).month() + 1
+    ).toString()}`,
+    end_date: `${dayjs(dates.end).year().toString()}-${(
+      dayjs(dates.end).month() + 1
+    ).toString()}`,
+  });
 
   useEffect(() => {
-    const currentData = buronan.filter((item) => item.name === nama);
-    setSingleData(currentData[0]);
-    setPhoneNumber(currentData[0].phone_number[0]);
-    setNik(currentData[0].identity_number[0]);
-    setNoRek(currentData[0].acc_number[0]);
-    setEmail(currentData[0].email[0]);
-  }, [nama]);
+    const url = `${
+      import.meta.env.VITE_BACKEND_BASE
+    }/informasi-buronan/one-buron`;
+
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      })
+      .then((res) => {
+        const data = res.data;
+        setSingleData(data[0]);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => console.log(singleData));
+  }, []);
 
   useEffect(() => {
-    const currentData = dummyCalls.filter(
-      (item) => item.caller_number === phoneNumber
-    );
-    setCallData(currentData[0]);
-  }, [phoneNumber]);
+    if (singleData) {
+      setGraphParams((prev) => ({
+        ...prev,
+        nik: singleData.nik,
+        no_hp: singleData.no_hp[0],
+        no_rek: singleData.no_rekening,
+        email: singleData.email[0],
+      }));
+    }
+  }, [singleData]);
 
   useEffect(() => {
-    const currentData = logNik.filter(
-      (item) => item.person_national_id === nik
-    );
-    setIdData(currentData[0]);
-  }, [nik]);
-
-  useEffect(() => {
-    const currentData = trx.filter(
-      (item) => item.bank_account_number === noRek
-    );
-    setTrxData(currentData[0]);
-  }, [noRek]);
-
-  useEffect(() => {
-    const currentData = onlineLog.filter(
-      (item) => item.email_address === email
-    );
-    setOnlineData(currentData[0]);
-  }, [email]);
-
-  useEffect(() => {
-    console.log(dayjs(dates.start).month() + 1, dayjs(dates.start).year());
-    console.log(dayjs(dates.end).month() + 1, dayjs(dates.end).year());
+    setGraphParams((prev) => ({
+      ...prev,
+      start_date: `${dayjs(dates.start).year().toString()}-${(
+        dayjs(dates.start).month() + 1
+      ).toString()}`,
+      end_date: `${dayjs(dates.end).year().toString()}-${(
+        dayjs(dates.end).month() + 1
+      ).toString()}`,
+    }));
   }, [dates]);
+
+  useEffect(() => {
+    console.log(graphParams);
+    let url = "informasi-buronan/graph-profil-buron?";
+    const params = Object.entries(graphParams);
+    const firstParams = params[1];
+    url += `${firstParams[0]}=${firstParams[1]}`;
+    params.forEach(([key, value]) => {
+      if (url.includes(`${key}=${value}`)) {
+        return;
+      }
+      url += `&${key}=${value}`;
+    });
+    setServiceUrl(url);
+  }, [graphParams]);
+
+  useEffect(() => {
+    console.log(serviceUrl);
+  }, [serviceUrl]);
 
   return (
     <Stack gap={2} minHeight="100vh" width="100%">
@@ -133,7 +132,7 @@ export default function Overview() {
               </Grid>
             </Grid>
             <CardGraphVis
-              service="informasi-buronan/graph-profil-buron?nik=3174010102700009&no_hp=081181234455&no_rek=2907991604&start_date=2020-01&end_date=2021-12&email1=harunmasiku@example.com&n_kontak1=086899169400&tgl_cctv=2020-11-23"
+              service={serviceUrl}
               height="462px"
               title="Profil Buronan"
             />
@@ -145,9 +144,11 @@ export default function Overview() {
             <SelectCard
               title="NIK"
               label="Pilih NIK"
-              value={nik}
-              onSelectChg={(e) => setNik(e.target.value)}
-              itemList={singleData.identity_number}
+              value={graphParams.nik}
+              onSelectChg={(e) =>
+                setGraphParams((prev) => ({ ...prev, nik: e.target.value }))
+              }
+              itemList={singleData && singleData.nik}
               bgCol="#33714E"
               txtCol="white"
               headerCol="white"
@@ -155,9 +156,11 @@ export default function Overview() {
             <SelectCard
               title="No. Kontak"
               label="Pilih No. Kontak"
-              value={phoneNumber}
-              onSelectChg={(e) => setPhoneNumber(e.target.value)}
-              itemList={singleData.phone_number}
+              value={graphParams.no_hp}
+              onSelectChg={(e) =>
+                setGraphParams((prev) => ({ ...prev, no_hp: e.target.value }))
+              }
+              itemList={singleData && singleData.no_hp}
               bgCol="#33714E"
               txtCol="white"
               headerCol="white"
@@ -165,9 +168,11 @@ export default function Overview() {
             <SelectCard
               title="Email"
               label="Pilih Email"
-              value={email}
-              onSelectChg={(e) => setEmail(e.target.value)}
-              itemList={singleData.email}
+              value={graphParams.email}
+              onSelectChg={(e) =>
+                setGraphParams((prev) => ({ ...prev, email: e.target.value }))
+              }
+              itemList={singleData && singleData.email}
               bgCol="#33714E"
               txtCol="white"
               headerCol="white"
@@ -175,9 +180,11 @@ export default function Overview() {
             <SelectCard
               title="No. Rekening"
               label="Pilih No. Rekening"
-              value={noRek}
-              onSelectChg={(e) => setNoRek(e.target.value)}
-              itemList={singleData.acc_number}
+              value={graphParams.no_rek}
+              onSelectChg={(e) =>
+                setGraphParams((prev) => ({ ...prev, no_rek: e.target.value }))
+              }
+              itemList={singleData && singleData.no_rekening}
               bgCol="#33714E"
               txtCol="white"
               headerCol="white"

@@ -66,7 +66,7 @@ const CardGraphVis = ({
 
   useEffect(() => {
     fetchGraph();
-  }, []);
+  }, [service]);
 
   const options = {
     autoResize: true,

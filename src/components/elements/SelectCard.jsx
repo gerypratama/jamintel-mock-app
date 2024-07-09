@@ -27,6 +27,9 @@ export default function SelectCard({
   data,
 }) {
   // console.log(data)
+
+  const items = Array.isArray(itemList) ? itemList : Array(itemList);
+
   return (
     <StyledCard title={title}>
       <FormControl fullWidth>
@@ -39,8 +42,8 @@ export default function SelectCard({
           onChange={onSelectChg}
           sx={{ bgcolor: "white" }}
         >
-          {itemList.map((item) => (
-            <MenuItem key={item} value={item}>
+          {items.map((item, idx) => (
+            <MenuItem key={idx} value={item}>
               {item}
             </MenuItem>
           ))}

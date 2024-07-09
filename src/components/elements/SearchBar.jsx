@@ -21,7 +21,7 @@ export default function SearchBar() {
       import.meta.env.VITE_BACKEND_BASE
     }/informasi-buronan/one-buron`;
 
-    console.log(url);
+    // console.log(url);
     axios
       .get(url, {
         headers: {
@@ -29,25 +29,14 @@ export default function SearchBar() {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const data = res.data;
-        // const listBuron = data && data.map((item) => item.nama);
-        setBuronan((prev) => [...prev, ...data]);
+        const listBuron = data && data.map((item) => item.nama);
+        setBuronan((prev) => [...prev, ...listBuron]);
       })
       .catch((err) => console.log(err))
       .finally(() => console.log(buronan));
   }, []);
-
-  useEffect(() => {
-    if (namaBuronan !== "") {
-      sessionStorage.setItem("namaBuron", namaBuronan);
-      if (buronan.length > 0) {
-        sessionStorage.setItem("listBuron", JSON.stringify(buronan));
-      }
-    }
-  }, [namaBuronan]);
-
-  console.log(buronan);
 
   return (
     <Box bgcolor="#BDCBBF" color="white" p={3}>
@@ -70,9 +59,9 @@ export default function SearchBar() {
                 onChange={(e) => setNamaBuronan(e.target.value)}
               >
                 {buronan.length > 0 &&
-                  buronan.map((buron) => (
-                    <MenuItem key={buron.nik} value={buron.nama}>
-                      {buron.nama}
+                  buronan.map((buron, idx) => (
+                    <MenuItem key={idx} value={buron}>
+                      {buron}
                     </MenuItem>
                   ))}
               </Select>
