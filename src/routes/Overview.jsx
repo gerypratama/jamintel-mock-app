@@ -96,13 +96,13 @@ export default function Overview() {
   }, [serviceUrl]);
 
   return (
-    <Stack gap={2} minHeight="100vh" width="100%">
-      <Grid container spacing={3} p={2} columns={12} justifyContent="center">
-        <Grid item xs={3}>
+    <Stack minHeight="100vh" width="100%">
+      <Grid container spacing={3} p={2} justifyContent="center">
+        <Grid item xs={4}>
           {singleData && <ProfileCard data={singleData} />}
         </Grid>
 
-        <Grid item xs={7}>
+        <Grid item xs={8}>
           <Stack gap={2}>
             <Grid container spacing={3}>
               <Grid item xs={6}>
@@ -114,7 +114,7 @@ export default function Overview() {
                     onChange={(newValue) =>
                       setDates((prev) => ({ ...prev, start: newValue }))
                     }
-                    sx={{ bgcolor: "white" }}
+                    sx={{ width: "full", bgcolor: "white" }}
                   />
                 </StyledCard>
               </Grid>
@@ -127,68 +127,15 @@ export default function Overview() {
                     onChange={(newValue) =>
                       setDates((prev) => ({ ...prev, end: newValue }))
                     }
-                    sx={{ bgcolor: "white" }}
+                    sx={{ width: "full", bgcolor: "white" }}
                   />
                 </StyledCard>
               </Grid>
             </Grid>
             <CardGraphVis
               service={serviceUrl}
-              height="462px"
+              height="490px"
               title="Profil Buronan"
-            />
-          </Stack>
-        </Grid>
-
-        <Grid item xs={2}>
-          <Stack gap={2}>
-            <SelectCard
-              title="NIK"
-              label="Pilih NIK"
-              value={graphParams.nik}
-              onSelectChg={(e) =>
-                setGraphParams((prev) => ({ ...prev, nik: e.target.value }))
-              }
-              itemList={singleData && singleData.nik}
-              bgCol="#33714E"
-              txtCol="white"
-              headerCol="white"
-            />
-            <SelectCard
-              title="No. Kontak"
-              label="Pilih No. Kontak"
-              value={graphParams.no_hp}
-              onSelectChg={(e) =>
-                setGraphParams((prev) => ({ ...prev, no_hp: e.target.value }))
-              }
-              itemList={singleData && singleData.no_hp}
-              bgCol="#33714E"
-              txtCol="white"
-              headerCol="white"
-            />
-            <SelectCard
-              title="Email"
-              label="Pilih Email"
-              value={graphParams.email}
-              onSelectChg={(e) =>
-                setGraphParams((prev) => ({ ...prev, email: e.target.value }))
-              }
-              itemList={singleData && singleData.email}
-              bgCol="#33714E"
-              txtCol="white"
-              headerCol="white"
-            />
-            <SelectCard
-              title="No. Rekening"
-              label="Pilih No. Rekening"
-              value={graphParams.no_rek}
-              onSelectChg={(e) =>
-                setGraphParams((prev) => ({ ...prev, no_rek: e.target.value }))
-              }
-              itemList={singleData && singleData.no_rekening}
-              bgCol="#33714E"
-              txtCol="white"
-              headerCol="white"
             />
           </Stack>
         </Grid>
@@ -247,6 +194,64 @@ export default function Overview() {
             </Grid>
           </Grid>
         </Grid> */}
+      </Grid>
+      <Grid container spacing={3} justifyContent="center">
+        <Grid item xs={3}>
+          <SelectCard
+            title="NIK"
+            label="Pilih NIK"
+            value={graphParams.nik}
+            onSelectChg={(e) =>
+              setGraphParams((prev) => ({ ...prev, nik: e.target.value }))
+            }
+            itemList={singleData && singleData.nik}
+            bgCol="#33714E"
+            txtCol="white"
+            headerCol="white"
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <SelectCard
+            title="No. Kontak"
+            label="Pilih No. Kontak"
+            value={graphParams.no_hp}
+            onSelectChg={(e) =>
+              setGraphParams((prev) => ({ ...prev, no_hp: e.target.value }))
+            }
+            itemList={singleData && singleData.no_hp}
+            bgCol="#33714E"
+            txtCol="white"
+            headerCol="white"
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <SelectCard
+            title="Email"
+            label="Pilih Email"
+            value={graphParams.email}
+            onSelectChg={(e) =>
+              setGraphParams((prev) => ({ ...prev, email: e.target.value }))
+            }
+            itemList={singleData && singleData.email}
+            bgCol="#33714E"
+            txtCol="white"
+            headerCol="white"
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <SelectCard
+            title="No. Rekening"
+            label="Pilih No. Rekening"
+            value={graphParams.no_rek}
+            onSelectChg={(e) =>
+              setGraphParams((prev) => ({ ...prev, no_rek: e.target.value }))
+            }
+            itemList={singleData && singleData.no_rekening}
+            bgCol="#33714E"
+            txtCol="white"
+            headerCol="white"
+          />
+        </Grid>
       </Grid>
     </Stack>
   );

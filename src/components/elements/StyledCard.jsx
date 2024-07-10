@@ -11,7 +11,7 @@ export default function StyledCard({ title, children }) {
           color: "white",
         }}
       />
-      <CardContent>{children}</CardContent>
+      <CardContent sx={{pt: 1}}>{children}</CardContent>
     </Card>
   );
 }
