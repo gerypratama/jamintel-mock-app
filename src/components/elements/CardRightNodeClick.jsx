@@ -21,7 +21,7 @@ const CardRightNodeClick = () => {
   useEffect(() => {
     if (selectedRightClickNode && showExpandRelationships) {
       const fetchRelationships = async () => {
-        const url = `http://127.0.0.1:5174/api/informasi-buronan/graph-profil-buron/expand?id=${selectedRightClickNode}`;
+        const url = `${import.meta.env.VITE_BACKEND_BASE}/informasi-buronan/graph-profil-buron/expand?id=${selectedRightClickNode}`;
         setLoading(true);
         try {
           const response = await axios.get(url, {
@@ -54,7 +54,7 @@ const CardRightNodeClick = () => {
   }, [selectedRightClickNode, id1]);
 
   const handleRelationshipClick = async (relationship) => {
-    const url = `http://127.0.0.1:5174/api/informasi-buronan/graph-profil-buron/expand?id=${selectedRightClickNode}&rel=${relationship}`
+    const url = `${import.meta.env.VITE_BACKEND_BASE}/informasi-buronan/graph-profil-buron/expand?id=${selectedRightClickNode}&rel=${relationship}`
     try {
       const response = await axios.get(url, {
         headers: {
@@ -80,7 +80,7 @@ const CardRightNodeClick = () => {
   };
 
   const handleRunShortestPathClick = async () => {
-    const url = `http://127.0.0.1:5174/api/informasi-buronan/graph-profil-buron/shortest-path?id1=${id1}&id2=${id2}`
+    const url = `${import.meta.env.VITE_BACKEND_BASE}/informasi-buronan/graph-profil-buron/shortest-path?id1=${id1}&id2=${id2}`
     try {
       const response = await axios.get(url, {
         headers: {
