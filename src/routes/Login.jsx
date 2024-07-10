@@ -1,6 +1,13 @@
 import Cookies from "js-cookie";
 import { useState } from "react";
-import { Box, Button, Card, CardContent, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -49,29 +56,22 @@ export default function Login() {
       width="100vw"
       height="100vh"
     >
-      <Card sx={{ minWidth: "25vw", minHeight: "50vh", p: "1rem" }}>
+      <Card sx={{ minWidth: "35vw", minHeight: "50vh", p: "1rem" }}>
         <CardContent sx={{ height: "100%" }}>
-          <Box
-            display="flex"
-            flexDirection="column"
-            height="80%"
-            component="form"
-            justifyContent="space-evenly"
-            alignItems="center"
-          >
+          <Stack gap={4}>
             <img
               src="/kejagung.svg"
               alt="logo"
-              style={{ maxHeight: "120px", marginBottom: "1rem" }}
+              style={{ maxHeight: "120px" }}
             />
             <TextField
+              fullWidth
               label="Username"
               value={loginData.username}
               onChange={(e) =>
                 setLoginData((prev) => ({ ...prev, username: e.target.value }))
               }
               sx={{
-                mb: 2,
                 "& label.Mui-focused": {
                   color: "#028f41",
                 },
@@ -88,6 +88,7 @@ export default function Login() {
               required
             />
             <TextField
+              fullWidth
               label="Password"
               type="password"
               value={loginData.password}
@@ -95,7 +96,6 @@ export default function Login() {
                 setLoginData((prev) => ({ ...prev, password: e.target.value }))
               }
               sx={{
-                mb: 4,
                 "& label.Mui-focused": {
                   color: "#028f41",
                 },
@@ -116,6 +116,8 @@ export default function Login() {
               variant="contained"
               onClick={(e) => handleSubmit(e)}
               sx={{
+                width: "fit-content",
+                alignSelf: "center",
                 bgcolor: "#028f41",
                 "&:hover": {
                   bgcolor: "#157f1f",
@@ -124,7 +126,7 @@ export default function Login() {
             >
               Login
             </Button>
-          </Box>
+          </Stack>
         </CardContent>
       </Card>
     </Box>
