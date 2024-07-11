@@ -3,10 +3,23 @@ import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import { Box, Button, Container, Stack } from "@mui/material";
 import { navLinks } from "../constants/navLinks";
+import { useState } from "react";
 
 export default function AuthUser() {
+  const [links, setLinks] = useState(navLinks);
   const authSuccess = Cookies.get("token");
   const navigate = useNavigate();
+
+  const handleClick = (key, path) => {
+    setLinks((prev) =>
+      prev.map((link) =>
+        link.key === key
+          ? { ...link, isActive: true }
+          : { ...link, isActive: false }
+      )
+    );
+    navigate(`/${path}`);
+  };
 
   if (!authSuccess) {
     return <Navigate to="/login" />;
@@ -17,17 +30,23 @@ export default function AuthUser() {
       <Navbar />
       <Container maxWidth="xl" sx={{ mt: 18, pt: 3 }}>
         <Stack>
-          <Stack direction="row" px={1}>
-            {navLinks.map((link) => (
+          <Stack direction="row" px={1} gap={1}>
+            {links.map((link) => (
               <Button
                 key={link.key}
-                onClick={() => navigate(`/${link.path}`)}
+                onClick={() => handleClick(link.key, link.path)}
                 sx={{
-                  border: "3px solid transparent",
-                  color: "#33714E",
+                  borderRadius: 0,
+                  borderBottom: `4px solid ${
+                    link.isActive ? "#353229" : "transparent"
+                  }`,
+                  color: link.isActive ? "currentcolor" : "#33714E",
+                  fontWeight: link.isActive ? 700 : 500,
                   "&:hover": {
                     bgcolor: "transparent",
-                    borderBottomColor: "#33714E",
+                    borderBottomColor: link.isActive
+                      ? "currentcolor"
+                      : "#33714E",
                   },
                 }}
               >
