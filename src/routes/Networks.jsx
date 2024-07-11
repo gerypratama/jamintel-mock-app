@@ -40,23 +40,6 @@ export default function Networks() {
       .finally(() => console.log(singleData));
   }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await fetch(
-  //       `${import.meta.env.VITE_BACKEND_BASE}/informasi-buronan/phone-call`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${Cookies.get("token")}`,
-  //         },
-  //       }
-  //     )
-  //       .then((res) => res.json())
-  //       .then((data) => console.log(data))
-  //       .catch((err) => alert(err));
-  //   };
-  //   fetchData();
-  // }, []);
-
   return (
     <Stack gap={2} minHeight="100vh">
       <Grid container spacing={3} p={2} justifyContent="center">
