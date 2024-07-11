@@ -114,7 +114,7 @@ export default function Overview() {
                     onChange={(newValue) =>
                       setDates((prev) => ({ ...prev, start: newValue }))
                     }
-                    sx={{ width: "full", bgcolor: "white" }}
+                    sx={{ width: "100%", bgcolor: "white" }}
                   />
                 </StyledCard>
               </Grid>
@@ -127,7 +127,7 @@ export default function Overview() {
                     onChange={(newValue) =>
                       setDates((prev) => ({ ...prev, end: newValue }))
                     }
-                    sx={{ width: "full", bgcolor: "white" }}
+                    sx={{ width: "100%", bgcolor: "white" }}
                   />
                 </StyledCard>
               </Grid>

@@ -20,7 +20,7 @@ export default function ProfileCard({ data }) {
         sx={{ fontWeight: 700, color: "white" }}
       />
       {data && (
-        <CardContent>
+        <CardContent sx={{pt: 0}}>
           <Container
             sx={{
               display: "flex",
