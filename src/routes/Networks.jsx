@@ -134,7 +134,7 @@ export default function Networks() {
 
             <Grid item xs={12}>
               <CardGraphVis
-                service="informasi-buronan/graph-profil-buron??nik=3174010102700009&no_hp=081181234455&no_rek=2907991604&start_date=2020-01&end_date=2021-12&email1=harunmasiku@example.com&n_kontak1=086899169400&tgl_cctv=2020-11-23"
+                service="jaringan-buronan/graph-network-buron?buron=Harun%20Masiku&platform=instagram"
                 height="500px"
                 title="Graph Network"
               />
