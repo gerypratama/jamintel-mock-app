@@ -52,6 +52,7 @@ const [data, setData] = useState(null)
                   <TableCell
                     key={idx}
                     sx={{
+                      bgcolor: '#E4C64D',
                       fontWeight: 600,
                       color: "white",
                       textWrap: "nowrap",
