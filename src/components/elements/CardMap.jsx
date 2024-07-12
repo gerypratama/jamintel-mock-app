@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { Card, CardHeader, CardContent, colors, Box } from "@mui/material";
+import { Card, CardHeader, Box } from "@mui/material";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { FaLocationDot } from "react-icons/fa6";
+import { createRoot } from "react-dom/client";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
 
@@ -35,7 +37,7 @@ function CardMap() {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
+      // console.log(data);
       if (map.current) return;
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
@@ -54,17 +56,14 @@ function CardMap() {
             msg: marker.properties.content,
           })
         );
-      
-      console.log(markers)
+
+      // console.log(markers);
 
       markers.forEach((marker) => {
         // Create a DOM element for the marker
         const el = document.createElement("div");
-        el.className = "marker";
-        el.style.backgroundColor = "red";
-        el.style.width = "10px";
-        el.style.height = "10px";
-        el.style.borderRadius = "50%";
+        const root = createRoot(el);
+        root.render(<FaLocationDot color="red" size={32}/>);
 
         // Create the popup
         const popup = new mapboxgl.Popup({ offset: 25 }).setText(marker.msg);
@@ -99,7 +98,7 @@ function CardMap() {
           },
           paint: {
             "line-color": "#888",
-            "line-width": 8,
+            "line-width": 4,
           },
         });
       });
@@ -113,7 +112,7 @@ function CardMap() {
         setZoom(map.current.getZoom().toFixed(2));
       });
 
-      console.log(map);
+      // console.log(map);
 
       // Clean up on unmount
       return () => map.current.remove();
