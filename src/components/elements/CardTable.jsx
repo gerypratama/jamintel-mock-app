@@ -12,62 +12,83 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import capitalizeStr from "../../utils/capitalizeStr";
+import axios from "axios";
 
-export default function CardTable({
-  service,
-  bgCol = undefined,
-  txtCol = undefined,
-}) {
+export default function CardTable({ service, title }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const url = import.meta.env.VITE_BACKEND_BASE + service;
-    const fetchData = async () => {
-      await fetch(url, {
+    const url = `${
+      import.meta.env.VITE_BACKEND_BASE
+    }/informasi-buronan/${service}`;
+
+    axios
+      .get(url, {
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
         },
       })
-        .then((res) => res.json())
-        .then((obj) => obj && setData(obj))
-        .catch((err) => alert(err));
-    };
-    fetchData();
-  }, []);
+      .then((res) => {
+        const list = res.data;
+        setData(list);
+      })
+      .catch((err) => console.log(err));
+    // .finally(() => console.log(data));
+  }, [service]);
+
+  console.log(data);
+  const headers = data && data.length > 0 && Object.keys(data[0]);
 
   return (
-    <Card sx={{ bgcolor: bgCol ? bgCol : "whitesmoke" }}>
+    <Card sx={{ maxHeight: 300, bgcolor: "#33714E" }}>
       <CardHeader
-        title="Keluarga"
+        title={title}
         titleTypographyProps={{ variant: "h7" }}
-        sx={{ fontWeight: 700, color: '#028f41' }}
+        sx={{ fontWeight: 700, color: "white" }}
       />
-      <CardContent>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: 600, color: txtCol ? txtCol : "#282d33" }}>
-                Nama
-              </TableCell>
-              <TableCell sx={{ fontWeight: 600, color: txtCol ? txtCol : "#282d33" }}>
-                Hubungan
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data &&
-              data.map((item) => (
-                <TableRow key={item.nama}>
-                  <TableCell sx={{ color: txtCol ? txtCol : "#282d33" }}>
-                    {item.Nama}
-                  </TableCell>
-                  <TableCell sx={{ color: txtCol ? txtCol : "#282d33" }}>
-                    {item.Hubungan}
-                  </TableCell>
+      <CardContent sx={{ p: 2, overflowX: "scroll", maxHeight: 300 }}>
+        {!data ? (
+          <Typography color="white">Data not found</Typography>
+        ) : (
+          <Table>
+            <TableHead>
+              <TableRow>
+                {headers &&
+                  headers.map((header, idx) => (
+                    <TableCell
+                      key={idx}
+                      sx={{
+                        bgcolor: "#E4C64D",
+                        fontWeight: 600,
+                        color: "white",
+                        textWrap: "nowrap",
+                      }}
+                    >
+                      {capitalizeStr(header)}
+                    </TableCell>
+                  ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data && data.length > 0 ? (
+                data.map((item, idx) => (
+                  <TableRow key={idx}>
+                    {Object.values(item).map((value, idx) => (
+                      <TableCell key={idx} sx={{ color: "white" }}>
+                        {value.toString()}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>Data not found</TableCell>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+              )}
+            </TableBody>
+          </Table>
+        )}
       </CardContent>
     </Card>
   );

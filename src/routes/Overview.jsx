@@ -9,6 +9,7 @@ import StyledCard from "../components/elements/StyledCard";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import axios from "axios";
+import CardTable from "../components/elements/CardTable";
 
 export default function Overview() {
   const [singleData, setSingleData] = useState(null);
@@ -31,6 +32,20 @@ export default function Overview() {
     end_date: `${dayjs(dates.end).year().toString()}-${(
       dayjs(dates.end).month() + 1
     ).toString()}`,
+  });
+  const [tableUrl, setTableUrl] = useState({
+    nik: `nik-web?nik=${
+      graphParams.nik !== "" ? graphParams.nik : "3174010102700009"
+    }`,
+    no_hp: `phone-call?no_hp=${
+      graphParams.no_hp !== "" ? graphParams.no_hp : "3174010102700009"
+    }&start_date=${graphParams.start_date}&end_date=${graphParams.end_date}`,
+    email: `website?email=${
+      graphParams.email !== "" ? graphParams.email : "harunmasiku@example.com"
+    }`,
+    no_rek: `transaksi-bank?no_rek=${
+      graphParams.no_rek !== "" ? graphParams.no_rek : "2907991604"
+    }`,
   });
 
   useEffect(() => {
@@ -89,6 +104,22 @@ export default function Overview() {
       url += `&${key}=${value}`;
     });
     setServiceUrl(url);
+
+    setTableUrl((prev) => ({
+      ...prev,
+      nik: `nik-web?nik=${
+        graphParams.nik !== "" ? graphParams.nik : "3174010102700009"
+      }`,
+      no_hp: `phone-call?no_hp=${
+        graphParams.no_hp !== "" ? graphParams.no_hp : "3174010102700009"
+      }&start_date=${graphParams.start_date}&end_date=${graphParams.end_date}`,
+      email: `website?email=${
+        graphParams.email !== "" ? graphParams.email : "harunmasiku@example.com"
+      }`,
+      no_rek: `transaksi-bank?no_rek=${
+        graphParams.no_rek !== "" ? graphParams.no_rek : "2907991604"
+      }`,
+    }));
   }, [graphParams]);
 
   return (
@@ -135,61 +166,6 @@ export default function Overview() {
             />
           </Stack>
         </Grid>
-
-        {/* <Grid item xs={8}>
-          <Grid container spacing={3} justifyContent="center">
-            <Grid item xs={12}>
-              <CardGraphVis
-                service="informasi-buronan/graph-profil-buron?nik=3174010102700009&no_hp=081181234455&no_rek=2907991604&start_date=2020-01&end_date=2021-12&email1=harunmasiku@example.com&n_kontak1=086899169400&tgl_cctv=2020-11-23"
-                height="468px"
-                title="Profil Buronan"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardTableTrack
-                data={callData && callData.calls}
-                title="Panggilan Terakhir"
-                label="Pilih No. Telepon"
-                source={phoneNumber}
-                onSelectChg={(e) => setPhoneNumber(e.target.value)}
-                srcList={singleData.phone_number}
-              />
-            </Grid>
-
-            <Grid item xs={6}>
-              <CardTableTrack
-                data={idData && idData.logs}
-                title="Rekam Jejak"
-                label="Pilih NIK"
-                source={nik}
-                onSelectChg={(e) => setNik(e.target.value)}
-                srcList={singleData.identity_number}
-              />
-            </Grid>
-
-            <Grid item xs={6}>
-              <CardTableTrack
-                data={trxData && trxData.transactions}
-                title="Transaksi Terakhir"
-                label="Pilih No. Rekening"
-                source={noRek}
-                onSelectChg={(e) => setNoRek(e.target.value)}
-                srcList={singleData.acc_number}
-              />
-            </Grid>
-
-            <Grid item xs={6}>
-              <CardTableTrack
-                data={onlineData && onlineData.service_logs}
-                title="Aktivitas Online Terakhir"
-                label="Pilih Email"
-                source={email}
-                onSelectChg={(e) => setEmail(e.target.value)}
-                srcList={singleData.email}
-              />
-            </Grid>
-          </Grid>
-        </Grid> */}
       </Grid>
       <Grid container spacing={3} justifyContent="center">
         <Grid item xs={3}>
@@ -247,6 +223,27 @@ export default function Overview() {
             txtCol="white"
             headerCol="white"
           />
+        </Grid>
+        <Grid item xs={6}>
+          <CardTable
+            title="Kemunculan NIK di Internet"
+            service={tableUrl.nik}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <CardTable title="Riwayat Kontak" service={tableUrl.no_hp} />
+        </Grid>
+
+        <Grid item xs={6}>
+          <CardTable
+            title="Kemunculan Email di Internet"
+            service={tableUrl.email}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <CardTable title="Riwayat Transaksi" service={tableUrl.no_rek} />
         </Grid>
       </Grid>
     </Stack>
