@@ -14,7 +14,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export default function RelativeTableCard({ service, title }) {
-const [data, setData] = useState(null)
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const url = `${
@@ -31,8 +31,8 @@ const [data, setData] = useState(null)
         const list = res.data;
         setData(list);
       })
-      .catch((err) => console.log(err))
-      .finally(() => console.log(data));
+      .catch((err) => console.log(err));
+    // .finally(() => console.log(data));
   }, []);
 
   const headers = data && Object.keys(data[0]);
@@ -52,7 +52,7 @@ const [data, setData] = useState(null)
                   <TableCell
                     key={idx}
                     sx={{
-                      bgcolor: '#E4C64D',
+                      bgcolor: "#E4C64D",
                       fontWeight: 600,
                       color: "white",
                       textWrap: "nowrap",

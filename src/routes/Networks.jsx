@@ -5,15 +5,10 @@ import {
   Grid,
   Stack,
   Typography,
-  colors,
 } from "@mui/material";
-import SelectCard from "../components/elements/SelectCard";
 import { useEffect, useState } from "react";
 import CardGraphVis from "../components/elements/CardGraphVis";
 import Cookies from "js-cookie";
-import CardTable from "../components/elements/CardTable";
-import { buronan } from "../components/dummyFugitives";
-import CardTableTrack from "../components/elements/CardTableTrack";
 import RelativeTableCard from "../components/elements/RelativeTableCard";
 import axios from "axios";
 import ProfileCard from "../components/elements/ProfileCard";
@@ -36,8 +31,8 @@ export default function Networks() {
         const data = res.data;
         setSingleData(data[0]);
       })
-      .catch((err) => console.log(err))
-      .finally(() => console.log(singleData));
+      .catch((err) => console.log(err));
+    // .finally(() => console.log(singleData));
   }, []);
 
   return (

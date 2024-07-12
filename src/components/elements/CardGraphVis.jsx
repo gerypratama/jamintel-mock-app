@@ -53,7 +53,7 @@ const CardGraphVis = ({
         },
       });
       if (response.data) {
-        console.log(response.data);
+        // console.log(response.data);
         setPhysicsEnabled(true);
         dispatch(setGraphData(response.data));
         setLoading(false);
@@ -168,20 +168,20 @@ const CardGraphVis = ({
   };
 
   useEffect(() => {
-    console.log(network);
+    // console.log(network);
     if (network) {
       network.on("hoverNode", function () {
         network.canvas.body.container.style.cursor = "pointer";
       });
 
       network.on("oncontext", function (params) {
-        console.log(params, "---->>");
+        // console.log(params, "---->>");
         if (network.canvas.body.container.style.cursor === "pointer") {
           let { x, y } = params.pointer.DOM;
           const nodeId = network.getNodeAt({ x, y });
 
           if (nodeId !== undefined) {
-            console.log("Node ID:", nodeId);
+            // console.log("Node ID:", nodeId);
             dispatch(setRightClickNode({ nodeId, position: { x, y } }));
             params.event.preventDefault();
           }

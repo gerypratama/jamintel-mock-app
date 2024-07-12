@@ -48,8 +48,8 @@ export default function Overview() {
         const data = res.data;
         setSingleData(data[0]);
       })
-      .catch((err) => console.log(err))
-      .finally(() => console.log(singleData));
+      .catch((err) => console.log(err));
+    // .finally(() => console.log(singleData));
   }, []);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export default function Overview() {
   }, [dates]);
 
   useEffect(() => {
-    console.log(graphParams);
+    // console.log(graphParams);
     let url = "informasi-buronan/graph-profil-buron?";
     const params = Object.entries(graphParams);
     const firstParams = params[1];
@@ -90,10 +90,6 @@ export default function Overview() {
     });
     setServiceUrl(url);
   }, [graphParams]);
-
-  useEffect(() => {
-    console.log(serviceUrl);
-  }, [serviceUrl]);
 
   return (
     <Stack minHeight="100vh" width="100%">

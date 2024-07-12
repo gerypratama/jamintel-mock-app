@@ -34,8 +34,8 @@ export default function SearchBar() {
         const listBuron = data && data.map((item) => item.nama);
         setBuronan((prev) => [...prev, ...listBuron]);
       })
-      .catch((err) => console.log(err))
-      .finally(() => console.log(buronan));
+      .catch((err) => console.log(err));
+    // .finally(() => console.log(buronan));
   }, []);
 
   return (
