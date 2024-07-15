@@ -1,5 +1,4 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { selectGraphData, selectSelectedEdge } from "../../slice/graphSlice";
 import { useRef, useState, useEffect } from "react";

@@ -1,13 +1,11 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import capitalizeStr from "../../utils/capitalizeStr";
 import { useEffect, useState } from "react";
 import axios from "axios";

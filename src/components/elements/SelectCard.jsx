@@ -1,19 +1,13 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-  colors,
-} from "@mui/material";
+import Container from "@mui/material/Container";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import capitalizeStr from "../../utils/capitalizeStr";
 import StyledCard from "./StyledCard";
 

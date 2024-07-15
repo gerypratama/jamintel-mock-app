@@ -1,17 +1,14 @@
 import CardGraphVis from "../components/elements/CardGraphVis";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import SelectCard from "../components/elements/SelectCard";
 import CardMap from "../components/elements/CardMap";
 
 export default function Wiretapping() {
-  
   return (
     <Stack gap={2} minHeight="100vh">
       <Grid container spacing={3} p={2} justifyContent="center">

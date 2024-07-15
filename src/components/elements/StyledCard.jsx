@@ -1,4 +1,6 @@
-import { Card, CardContent, CardHeader } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
 
 export default function StyledCard({ title, children }) {
   return (
@@ -11,7 +13,7 @@ export default function StyledCard({ title, children }) {
           color: "white",
         }}
       />
-      <CardContent sx={{pt: 1}}>{children}</CardContent>
+      <CardContent sx={{ pt: 1 }}>{children}</CardContent>
     </Card>
   );
 }

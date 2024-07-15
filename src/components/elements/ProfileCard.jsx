@@ -1,15 +1,13 @@
-import {
-  capitalize,
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Container from "@mui/material/Container";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import capitalizeStr from "../../utils/capitalizeStr";
 
 export default function ProfileCard({ data }) {
   return (
@@ -20,7 +18,7 @@ export default function ProfileCard({ data }) {
         sx={{ fontWeight: 700, color: "white" }}
       />
       {data && (
-        <CardContent sx={{pt: 0}}>
+        <CardContent sx={{ pt: 0 }}>
           <Container
             sx={{
               display: "flex",
@@ -46,7 +44,7 @@ export default function ProfileCard({ data }) {
                   <TableRow key={key}>
                     <TableCell>
                       <Typography color="white" fontWeight={500}>
-                        {capitalize(key)}
+                        {capitalizeStr(key)}
                       </Typography>
                     </TableCell>
                     <TableCell sx={{ color: "white" }}>{value}</TableCell>

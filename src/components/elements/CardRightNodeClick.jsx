@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import axios from "axios";

@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { Card, CardHeader, Box } from "@mui/material";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
@@ -63,7 +65,7 @@ function CardMap() {
         // Create a DOM element for the marker
         const el = document.createElement("div");
         const root = createRoot(el);
-        root.render(<FaLocationDot color="red" size={32}/>);
+        root.render(<FaLocationDot color="red" size={32} />);
 
         // Create the popup
         const popup = new mapboxgl.Popup({ offset: 25 }).setText(marker.msg);

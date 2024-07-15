@@ -1,4 +1,3 @@
-import { color } from '@mui/system';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {

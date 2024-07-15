@@ -1,15 +1,12 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  colors,
-} from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import capitalizeStr from "../../utils/capitalizeStr";
@@ -37,7 +34,6 @@ export default function CardTable({ service, title }) {
     // .finally(() => console.log(data));
   }, [service]);
 
-  console.log(data);
   const headers = data && data.length > 0 && Object.keys(data[0]);
 
   return (

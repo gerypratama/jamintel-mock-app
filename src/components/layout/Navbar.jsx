@@ -1,13 +1,11 @@
-import {
-  AppBar,
-  Box,
-  Container,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import Cookies from "js-cookie";

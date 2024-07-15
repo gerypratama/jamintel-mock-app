@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Graph from "react-vis-network-graph";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardHeader, Container, Box, CircularProgress } from "@mui/material";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import Container from "@mui/material/Container";
+import CircularProgress from "@mui/material/CircularProgress";
 import Cookies from "js-cookie";
 import axios from "axios";
 import ToggleOptionGraph from "./ToogleOptionGraph";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import "../../assets/style/stylegraph.css";
 import {
   selectGraphData,
@@ -212,7 +216,12 @@ const CardGraphVis = ({
       />
       <Container sx={{ width: "100%" }}>
         {loading ? (
-          <Box display="flex" justifyContent="center" alignItems="center" height={height}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height={height}
+          >
             <CircularProgress />
           </Box>
         ) : (
@@ -227,8 +236,14 @@ const CardGraphVis = ({
                 options={options}
                 getNetwork={(network) => setNetwork(network)}
               />
-              <Box position="absolute" top='0' left="0" onClick={fetchGraph} style={{cursor: "pointer" }}>
-                <RestartAltIcon sx={{fontSize: 20, color:"#1976d2"}} />
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                onClick={fetchGraph}
+                style={{ cursor: "pointer" }}
+              >
+                <RestartAltIcon sx={{ fontSize: 20, color: "#1976d2" }} />
               </Box>
               <Box position="absolute" top="2px" left="30px">
                 <ToggleOptionGraph
@@ -236,7 +251,7 @@ const CardGraphVis = ({
                   checked={physicsEnabled}
                 />
               </Box>
-              
+
               <Box
                 position="absolute"
                 top="0"
@@ -268,7 +283,7 @@ const CardGraphVis = ({
               {selectedRightClickNode && (
                 <div
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     top: selectedRightClickNodePosition?.y + "px",
                     left: selectedRightClickNodePosition?.x + "px",
                   }}

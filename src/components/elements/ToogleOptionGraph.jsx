@@ -1,6 +1,7 @@
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
-import { Box, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,

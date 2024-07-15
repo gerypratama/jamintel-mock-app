@@ -1,11 +1,9 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import CardGraphVis from "../components/elements/CardGraphVis";
 import Cookies from "js-cookie";
