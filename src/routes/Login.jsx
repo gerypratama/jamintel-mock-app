@@ -1,20 +1,23 @@
 import Cookies from "js-cookie";
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Stack,
-  TextField,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function Login() {
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
   });
+  const [showPasswd, setShowPasswd] = useState(false);
   const authSuccess = Cookies.get("token");
 
   const navigate = useNavigate();
@@ -87,11 +90,21 @@ export default function Login() {
               }}
               required
             />
-            <TextField
+            <OutlinedInput
               fullWidth
               label="Password"
-              type="password"
+              type={showPasswd ? "text" : "password"}
               value={loginData.password}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPasswd(!showPasswd)}
+                    edge="end"
+                  >
+                    {showPasswd ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
               onChange={(e) =>
                 setLoginData((prev) => ({ ...prev, password: e.target.value }))
               }
