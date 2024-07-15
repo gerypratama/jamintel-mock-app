@@ -14,6 +14,7 @@ import axios from "axios";
 
 export default function CardTable({ service, title }) {
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const url = `${import.meta.env.VITE_BACKEND_BASE}/${service}`;
@@ -70,7 +71,11 @@ export default function CardTable({ service, title }) {
                   <TableRow key={idx}>
                     {Object.values(item).map((value, idx) => (
                       <TableCell key={idx} sx={{ color: "white" }}>
-                        {value.toString()}
+                        {typeof value === "string"
+                          ? value
+                          : typeof value === "number"
+                          ? value.toString()
+                          : `${value.year}-${value.month}-${value.day}`}
                       </TableCell>
                     ))}
                   </TableRow>

@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
@@ -11,7 +12,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export default function RelativeTableCard({ service, title }) {
+export default function RelativeTableCard({ service, title, setValue }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -65,9 +66,25 @@ export default function RelativeTableCard({ service, title }) {
             {data &&
               data.map((item, idx) => (
                 <TableRow key={idx}>
-                  {Object.values(item).map((value, idx) => (
-                    <TableCell key={idx} sx={{ color: "white" }}>
-                      {value}
+                  {Object.entries(item).map(([key, value]) => (
+                    <TableCell key={key} sx={{ color: "white" }}>
+                      {key === "Nama" ? (
+                        <Button
+                          variant="contained"
+                          onClick={() => setValue(value)}
+                          sx={{
+                            textTransform: "capitalize",
+                            fontWeight: 600,
+                            color: "#353229",
+                            bgcolor: "#E4C64D",
+                            "&:hover": { bgcolor: "#F6EFC5" },
+                          }}
+                        >
+                          {value}
+                        </Button>
+                      ) : (
+                        value
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
