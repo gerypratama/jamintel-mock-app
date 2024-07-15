@@ -227,23 +227,29 @@ export default function Overview() {
         <Grid item xs={6}>
           <CardTable
             title="Kemunculan NIK di Internet"
-            service={tableUrl.nik}
+            service={`informasi-buronan/${tableUrl.nik}`}
           />
         </Grid>
 
         <Grid item xs={6}>
-          <CardTable title="Riwayat Kontak" service={tableUrl.no_hp} />
+          <CardTable
+            title="Riwayat Kontak"
+            service={`informasi-buronan/${tableUrl.no_hp}`}
+          />
         </Grid>
 
         <Grid item xs={6}>
           <CardTable
             title="Kemunculan Email di Internet"
-            service={tableUrl.email}
+            service={`informasi-buronan/${tableUrl.email}`}
           />
         </Grid>
 
         <Grid item xs={6}>
-          <CardTable title="Riwayat Transaksi" service={tableUrl.no_rek} />
+          <CardTable
+            title="Riwayat Transaksi"
+            service={`informasi-buronan/${tableUrl.no_rek}`}
+          />
         </Grid>
       </Grid>
     </Stack>

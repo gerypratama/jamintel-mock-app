@@ -16,9 +16,7 @@ export default function CardTable({ service, title }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const url = `${
-      import.meta.env.VITE_BACKEND_BASE
-    }/informasi-buronan/${service}`;
+    const url = `${import.meta.env.VITE_BACKEND_BASE}/${service}`;
 
     axios
       .get(url, {
