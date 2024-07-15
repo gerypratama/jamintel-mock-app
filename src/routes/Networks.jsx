@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import RelativeTableCard from "../components/elements/RelativeTableCard";
 import axios from "axios";
 import ProfileCard from "../components/elements/ProfileCard";
+import CardTable from "../components/elements/CardTable";
 
 export default function Networks() {
   const [singleData, setSingleData] = useState(null);
@@ -44,7 +45,7 @@ export default function Networks() {
           <CardGraphVis
             service="jaringan-buronan/graph-network-buron?buron=Harun%20Masiku&platform=instagram"
             height="532px"
-            title="Graph Network"
+            title="Jaringan Buronan"
           />
         </Grid>
         <Grid item xs={4}>
@@ -60,29 +61,17 @@ export default function Networks() {
         </Grid>
 
         <Grid item xs={6}>
-          <Card sx={{ bgcolor: "whitesmoke" }}>
-            <CardHeader
-              title="Informasi Media Sosial 1"
-              titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: "#028f41" }}
-            />
-            <CardContent>
-              <Typography>Content coming soon</Typography>
-            </CardContent>
-          </Card>
+          <CardTable
+            service="jaringan-buronan/list-sosmed?nama_buron=Harun%20Masiku&nama_kontak=Tomas%20Masiku"
+            title="Informasi Media Sosial"
+          />
         </Grid>
 
         <Grid item xs={6}>
-          <Card sx={{ bgcolor: "whitesmoke" }}>
-            <CardHeader
-              title="Informasi Media Sosial 2"
-              titleTypographyProps={{ variant: "h7" }}
-              sx={{ fontWeight: 700, color: "#028f41" }}
-            />
-            <CardContent>
-              <Typography>Content coming soon</Typography>
-            </CardContent>
-          </Card>
+          <CardTable
+            service="jaringan-buronan/followers-sosmed?nama_buron=Harun%20Masiku&kel1=Tomas%20Masiku&platform=instagram"
+            title="Followers/Following Media Sosial"
+          />
         </Grid>
       </Grid>
     </Stack>
