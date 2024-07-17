@@ -2,19 +2,19 @@ export const navLinks = [
     {
         key: "overview",
         label: "Informasi Buronan",
-        path: "",
+        path: "overview",
         isActive: true,
     },
     {
         key: "jaringan",
         label: "Jaringan Buronan",
-        path: "network",
+        path: "jaringan",
         isActive: false,
     },
     {
         key: "penyadapan",
         label: "Perjalanan Buronan",
-        path: "wiretapping",
+        path: "penyadapan",
         isActive: false,
     },
 ];

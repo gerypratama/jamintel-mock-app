@@ -7,6 +7,7 @@ import RelativeTableCard from "../components/elements/RelativeTableCard";
 import axios from "axios";
 import ProfileCard from "../components/elements/ProfileCard";
 import CardTable from "../components/elements/CardTable";
+import capitalizeStr from "../utils/capitalizeStr";
 
 export default function Networks() {
   const [singleData, setSingleData] = useState(null);
@@ -17,7 +18,7 @@ export default function Networks() {
   //   "jaringan-buronan/followers-sosmed?nama_buron=Harun%20Masiku&kel1=Tomas%20Masiku&platform=instagram"
   // );
   const [relativeName, setRelativeName] = useState("Tomas Masiku");
-  // const [platform, setPlatform] = useState("instagram");
+  const [platform, setPlatform] = useState("instagram");
 
   useEffect(() => {
     const url = `${
@@ -40,7 +41,7 @@ export default function Networks() {
 
   useEffect(() => {
     setSocmedListUrl(
-      `jaringan-buronan/followers-sosmed?nama_buron=Harun%20Masiku&kel1=${
+      `jaringan-buronan/list-sosmed?nama_buron=Harun%20Masiku&nama_kontak=${
         relativeName !== "" ? relativeName : "Tomas%20Masiku"
       }&platform=instagram`
     );
@@ -91,7 +92,9 @@ export default function Networks() {
         <Grid item xs={6}>
           <CardTable
             service="jaringan-buronan/followers-sosmed?nama_buron=Harun%20Masiku&kel1=Tomas%20Masiku&platform=instagram"
-            title="Followers/Following Media Sosial"
+            title={`Followers/Following Media Sosial: ${capitalizeStr(
+              platform
+            )}`}
           />
         </Grid>
         <Grid item xs={12}>

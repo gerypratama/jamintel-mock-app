@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Graph from "react-vis-network-graph";
 import { useDispatch, useSelector } from "react-redux";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import Container from "@mui/material/Container";
 import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 import Cookies from "js-cookie";
 import axios from "axios";
 import ToggleOptionGraph from "./ToogleOptionGraph";

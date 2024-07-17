@@ -1,16 +1,15 @@
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import SearchBar from "../elements/SearchBar";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -66,7 +65,6 @@ export default function Navbar() {
           </Menu>
         </Box>
       </Container>
-      <SearchBar />
     </AppBar>
   );
 }
