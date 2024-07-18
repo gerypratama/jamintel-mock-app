@@ -19,10 +19,6 @@ import {
   setSelectedNode,
   setSelectedEdge,
   setRightClickNode,
-  selectSelectedNode,
-  selectSelectedEdge,
-  selectRightClickNodeId,
-  selectRightClickPosition,
 } from "../../slice/graphSlice";
 import CardNodeClick from "./CardNodeClick";
 import CardEdgeClick from "./CardEdgeClick";
@@ -31,24 +27,29 @@ import CardRightNodeClick from "./CardRightNodeClick";
 
 const CardGraphVis = ({
   service,
+  id = "graph",
   height,
   title,
   bgCol = undefined,
   headerCol = undefined,
 }) => {
   const dispatch = useDispatch();
-  const selectedNode = useSelector(selectSelectedNode);
-  const selectedEdge = useSelector(selectSelectedEdge);
-  const selectedRightClickNode = useSelector(selectRightClickNodeId);
-  const selectedRightClickNodePosition = useSelector(selectRightClickPosition);
   const [network, setNetwork] = useState(null);
   const [physicsEnabled, setPhysicsEnabled] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
-  const [loading, setLoading] = useState(true); // State untuk loading
-  const graphData = useSelector(selectGraphData);
+  const [loading, setLoading] = useState(true);
+  const {graph} = useSelector(selectGraphData);
+  const graphId = graph[id]?.graphData
+  const selectedNode = graph[id]?.selectedNode
+  const selectedRightClickNode = graph[id]?.rightClickNodeId
+  const selectedRightClickNodePosition = graph[id]?.rightClickPosition
+  const selectedEdge = graph[id]?.selectedEdge
+  console.log(selectedNode)
+  
 
   const fetchGraph = async () => {
     const url = import.meta.env.VITE_BACKEND_BASE + "/" + service;
+    console.log(url)
     try {
       const response = await axios.get(url, {
         headers: {
@@ -56,10 +57,12 @@ const CardGraphVis = ({
           "Content-Type": "application/json",
         },
       });
+      const data = response.data
       if (response.data) {
         // console.log(response.data);
         setPhysicsEnabled(true);
-        dispatch(setGraphData(response.data));
+        dispatch(setGraphData({ data, id }));
+        
         setLoading(false);
       }
     } catch (error) {
@@ -138,22 +141,23 @@ const CardGraphVis = ({
 
   const handleNodeClick = (event) => {
     if (event.nodes.length === 0 && event.edges.length === 0) {
-      dispatch(setSelectedNode(null));
-      dispatch(setSelectedEdge(null));
-      dispatch(setRightClickNode({ nodeId: null, position: { x: 0, y: 0 } }));
+      dispatch(setSelectedNode({id, nodeId:null}));
+      dispatch(setSelectedEdge({id, edgeId:null}));
+      dispatch(setRightClickNode({id,nodeId: null, position: { x: 0, y: 0 } }));
     } else {
       const clickedElement = event.nodes.length > 0 ? "node" : "edge";
       const clickedElementId =
         clickedElement === "node" ? event.nodes[0] : event.edges[0];
 
       if (clickedElement === "node") {
-        dispatch(setSelectedNode(clickedElementId));
-        dispatch(setSelectedEdge(null));
-        dispatch(setRightClickNode({ nodeId: null, position: { x: 0, y: 0 } }));
+        // dispatch(setSelectedNode(clickedElementId));
+        dispatch(setSelectedNode({id, nodeId:clickedElementId}));
+        dispatch(setSelectedEdge({id, egdeId:null}));
+        dispatch(setRightClickNode({id, nodeId: null, position: { x: 0, y: 0 } }));
       } else {
-        dispatch(setSelectedEdge(clickedElementId));
-        dispatch(setSelectedNode(null));
-        dispatch(setRightClickNode({ nodeId: null, position: { x: 0, y: 0 } }));
+        dispatch(setSelectedEdge({id, edgeId:clickedElementId}));
+        dispatch(setSelectedNode({id, nodeId:null}));
+        dispatch(setRightClickNode({id, nodeId: null, position: { x: 0, y: 0 } }));
       }
     }
   };
@@ -186,7 +190,7 @@ const CardGraphVis = ({
 
           if (nodeId !== undefined) {
             // console.log("Node ID:", nodeId);
-            dispatch(setRightClickNode({ nodeId, position: { x, y } }));
+            dispatch(setRightClickNode({id, nodeId, position: { x, y } }));
             params.event.preventDefault();
           }
 
@@ -228,7 +232,7 @@ const CardGraphVis = ({
           <>
             <Box position="relative">
               <Graph
-                graph={graphData}
+                graph={graphId}
                 events={{
                   click: handleNodeClick,
                   doubleClick: handleNodeDoubleClick,
@@ -257,7 +261,7 @@ const CardGraphVis = ({
                 top="0"
                 right="0"
                 width={collapsed ? "300px" : "30px"}
-                height={collapsed ? "430px" : "30px"}
+                height={collapsed ? "95%" : "30px"}
                 bgcolor="white"
                 boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
                 display="flex"
@@ -276,9 +280,9 @@ const CardGraphVis = ({
                 >
                   {collapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                 </Box>
-                {collapsed && selectedNode && <CardNodeClick />}
-                {collapsed && selectedEdge && <CardEdgeClick />}
-                {collapsed && !selectedNode && !selectedEdge && <DefaultCard />}
+                {collapsed && selectedNode && <CardNodeClick id={id} />}
+                {collapsed && selectedEdge && <CardEdgeClick id={id}/>}
+                {collapsed && !selectedNode && !selectedEdge && <DefaultCard id={id} />}
               </Box>
               {selectedRightClickNode && (
                 <div
@@ -288,7 +292,7 @@ const CardGraphVis = ({
                     left: selectedRightClickNodePosition?.x + "px",
                   }}
                 >
-                  <CardRightNodeClick />
+                  <CardRightNodeClick id={id} />
                 </div>
               )}
             </Box>

@@ -11,10 +11,13 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const CardNodeClick = () => {
-  const graphData = useSelector(selectGraphData);
-  const selectedNode = useSelector(selectSelectedNode);
-  const node = graphData.nodes.find((n) => n.id === selectedNode);
+const CardNodeClick = ({id}) => {
+  const {graph} = useSelector(selectGraphData);
+  const graph1 = graph[id]?.graphData
+  const selectedNode = graph[id]?.selectedNode
+  const node = graph1.nodes.find((n) => n.id === selectedNode);
+  console.log(node)
+  console.log(selectedNode)
   const nodePropertiesRef = useRef(null);
   const [maxHeight, setMaxHeight] = useState(null);
 

@@ -6,10 +6,11 @@ import axios from "axios";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
 import TimelineIcon from '@mui/icons-material/Timeline';
-import { expandGraphData, selectRightClickNodeId, setRightClickNode, shortestPathGraphData } from "../../slice/graphSlice";
+import { expandGraphData, selectGraphData, selectRightClickNodeId, setRightClickNode, shortestPathGraphData } from "../../slice/graphSlice";
 
-const CardRightNodeClick = () => {
-  const selectedRightClickNode = useSelector(selectRightClickNodeId);
+const CardRightNodeClick = ({id}) => {
+  const {graph} = useSelector(selectGraphData);
+  const selectedRightClickNode = graph[id]?.rightClickNodeId
   const dispatch = useDispatch();
   const [relationships, setRelationships] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,6 +18,7 @@ const CardRightNodeClick = () => {
   const [showPathSubMenu, setShowPathSubMenu] = useState(false);
   const [id1, setId1] = useState(null);
   const [id2, setId2] = useState(null);
+  console.log(id)
 
   useEffect(() => {
     if (selectedRightClickNode && showExpandRelationships) {
@@ -65,9 +67,9 @@ const CardRightNodeClick = () => {
       const newData = response.data;
       console.log(newData);
 
-      dispatch(expandGraphData(newData));
+      dispatch(expandGraphData({id:id,newData}));
       setShowExpandRelationships(false);
-      dispatch(setRightClickNode({ nodeId: null, position: { x: 0, y: 0 } }));
+      dispatch(setRightClickNode({id, nodeId: null, position: { x: 0, y: 0 } }));
 
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -89,7 +91,7 @@ const CardRightNodeClick = () => {
         },
       });
       const newDataShortestPath = response.data;
-      dispatch(shortestPathGraphData(newDataShortestPath));
+      dispatch(shortestPathGraphData({id:id,newDataShortestPath}));
       console.log(newDataShortestPath);
 
       setShowPathSubMenu(false);

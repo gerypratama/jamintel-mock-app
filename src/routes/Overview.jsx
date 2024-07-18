@@ -160,6 +160,7 @@ export default function Overview() {
               </Grid>
             </Grid>
             <CardGraphVis
+              id="tes1"
               service={serviceUrl}
               height="490px"
               title="Profil Buronan"

@@ -55,6 +55,7 @@ export default function Networks() {
 
         <Grid item xs={9}>
           <CardGraphVis
+            id="graph1"
             service="jaringan-buronan/graph-network-buron?buron=Harun%20Masiku&platform=instagram"
             height="532px"
             title="Jaringan Buronan"
@@ -96,6 +97,7 @@ export default function Networks() {
         </Grid>
         <Grid item xs={12}>
           <CardGraphVis
+            id="graph2"
             service="jaringan-buronan/jaringan-medsos?fol_sus=april34&sus_ph=086899169400"
             height="532px"
             title="Jaringan Media Sosial"

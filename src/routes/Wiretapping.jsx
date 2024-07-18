@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import SelectCard from "../components/elements/SelectCard";
 import CardMap from "../components/elements/CardMap";
+import HeatMap from "../components/elements/Heatmap";
 
 export default function Wiretapping() {
   return (
@@ -41,6 +42,9 @@ export default function Wiretapping() {
 
         <Grid item xs={12}>
           <CardMap />
+        </Grid>
+        <Grid item xs={12}>
+          <HeatMap />
         </Grid>
       </Grid>
     </Stack>

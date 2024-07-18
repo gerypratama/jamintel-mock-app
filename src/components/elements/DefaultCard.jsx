@@ -2,15 +2,16 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectEdgeLabelCount, selectEdgesCount, selectGraphData, selectNodeLabelCount, selectNodesCount } from '../../slice/graphSlice';
 
-const DefaultCard = () => {
-  const nodeCount = useSelector(selectNodesCount);
-  const edgeCount = useSelector(selectEdgesCount);
-  const nodeLabelCount = useSelector(selectNodeLabelCount);
-  const edgeLabelCount = useSelector(selectEdgeLabelCount);
-  const graph = useSelector(selectGraphData)
-  const meta = graph?.meta
+const DefaultCard = ({id}) => {
+  
+  const {graph} = useSelector(selectGraphData);
+  const nodeCount = graph?.[id]?.nodesCount;
+  const edgeCount = graph?.[id]?.edgesCount;
+  const meta = graph?.[id]?.graphData.meta
+  console.log(meta)
+  const nodeLabelCount = graph?.[id]?.nodelabelCount
+  const edgeLabelCount = graph?.[id]?.edgelabelCount
   const nodeColors = meta?.node_color || {};
-
   const defaultCardRef = useRef(null);
   const [maxHeight, setMaxHeight] = useState(null);
 
@@ -111,7 +112,8 @@ const DefaultCard = () => {
             <button
               style={{
                 color: '#fff',
-                borderRadius: '16px',
+                // borderRadius: '16px',
+                borderRadius: '4px',
                 fontSize: '12px',
                 textTransform: 'none',
                 marginTop: '8px',
@@ -130,7 +132,8 @@ const DefaultCard = () => {
                 key={index}
                 style={{
                   color: '#fff',
-                  borderRadius: '16px',
+                  // borderRadius: '16px',
+                  borderRadius: '4px',
                   fontSize: '12px',
                   textTransform: 'none',
                   marginTop: '8px',
@@ -142,7 +145,7 @@ const DefaultCard = () => {
                   border: 'none'
                 }}
               >
-                <strong>{`${type} (${edgeLabelCount[type] || 0})`}</strong>
+                <strong>{`${type} (${edgeLabelCount?.[type] || 0})`}</strong>
               </button>
             ))}
           </div>

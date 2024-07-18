@@ -3,16 +3,21 @@ import { useSelector } from "react-redux";
 import { selectGraphData, selectSelectedEdge } from "../../slice/graphSlice";
 import { useRef, useState, useEffect } from "react";
 
-const CardEdgeClick = () => {
-  const graphData = useSelector(selectGraphData);
+const CardEdgeClick = ({id}) => {
+  const {graph} = useSelector(selectGraphData);
+  const graph1 = graph[id]?.graphData
+  const selectedEdge1 = graph[id]?.selectedEdge
   const selectedEdge = useSelector(selectSelectedEdge);
-  const edge = graphData.edges.find((n) => n.id === selectedEdge);
+  const edge = graph1.edges.find((n) => n.id === selectedEdge1);
+  console.log(edge)
   const edgePropertiesRef = useRef(null);
   const [maxHeight, setMaxHeight] = useState(null);
 
   if (!edge) return null;
 
-  const { label, properties, color } = edge;
+  const { label, properties} = edge;
+  const color = edge.color.color
+  console.log(color)
 
   useEffect(() => {
     const containerHeight = edgePropertiesRef.current?.parentElement?.clientHeight;
@@ -26,7 +31,7 @@ const CardEdgeClick = () => {
     <div ref={edgePropertiesRef} style={{ maxHeight: maxHeight ? `${maxHeight}px` : '100%', overflowY: 'auto', width: '100%', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem', fontFamily: 'Arial, sans-serif',padding:'8px' }}>
       <span style={{ marginLeft: "10px", color: '#333' }}>Relationship Properties</span>
       <div style={{ fontSize: '1.1rem', color: '#333', padding: '0.5rem', borderRadius: '4px', borderColor: 'GrayText', fontWeight: 'bold' }}>
-        <button style={{ marginTop: "2px", fontSize: "12px", backgroundColor: color || "#B6C0D0", color: '#fff', border: 'none', padding: '0.25rem 1rem', borderRadius: '4px', cursor: 'pointer', height: '28px', marginRight: '0.5rem' }}>
+        <button style={{ marginTop: "2px", fontSize: "12px", backgroundColor: "rgb(165, 171, 182)", color: '#fff', border: 'none', padding: '0.25rem 1rem', borderRadius: '4px', cursor: 'pointer', height: '28px', marginRight: '0.5rem' }}>
           {label}
         </button>
       </div>
