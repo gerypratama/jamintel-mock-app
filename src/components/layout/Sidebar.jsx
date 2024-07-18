@@ -1,68 +1,62 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import {
-  PiBinocularsFill,
-  PiCellTowerBold,
-  PiShareNetworkBold,
-  PiSignOutBold,
-  PiUsersThreeBold,
-  PiXBold,
-} from "react-icons/pi";
+  AssignmentInd,
+  AssignmentOutlined,
+  GridView,
+  InsertChartOutlined,
+} from "@mui/icons-material";
 
 const MENU_ITEMS = [
-  { key: "overview", label: "Overview", icon: <PiBinocularsFill />, path: "" },
+  { key: "dashboard", label: "Dashboard", icon: <GridView />, path: "" },
   {
-    key: "jaringan",
-    label: "Network",
-    icon: <PiShareNetworkBold />,
-    path: "network",
+    key: "info",
+    label: "Informasi Buronan",
+    icon: <AssignmentInd />,
+    path: "info-buronan/overview",
   },
   {
-    key: "penyadapan",
-    label: "Wiretapping",
-    icon: <PiCellTowerBold />,
-    path: "wiretapping",
+    key: "laporan",
+    label: "Laporan",
+    icon: <InsertChartOutlined />,
+    path: "",
   },
   {
-    key: "medsos",
-    label: "Social Media",
-    icon: <PiUsersThreeBold />,
-    path: "socmed",
+    key: "dokumen",
+    label: "Dokumen",
+    icon: <AssignmentOutlined />,
+    path: "",
   },
 ];
 
-function MenuItem({ isActive, label, icon, onClick }) {
+function MenuItem({ isActive, icon, onClick }) {
   return (
     <Button
       variant={isActive ? "contained" : "text"}
-      startIcon={icon}
       size="large"
       onClick={onClick}
       sx={{
         width: "100%",
-        justifyContent: "start",
         textTransform: "capitalize",
         py: 1.5,
-        color: isActive ? "whitesmoke" : "#028f41",
-        bgcolor: isActive ? "#157f1f" : "transparent",
+        color: isActive ? "#E4C64D" : "white",
+        bgcolor: "transparent",
         "&:hover": {
-          bgcolor: "#4cb963",
-          color: "whitesmoke",
+          bgcolor: "transparent",
+          color: "#E4C64D",
         },
       }}
     >
-      {label}
+      {icon}
     </Button>
   );
 }
 
-export default function SideBar({ onClose, onOutClick }) {
+export default function SideBar({ onOutClick }) {
   const [selectedItem, setSelectedItem] = useState(
     sessionStorage.getItem("selectedItem")
   );
@@ -70,14 +64,7 @@ export default function SideBar({ onClose, onOutClick }) {
 
   const handleClick = (item) => {
     setSelectedItem(item.key);
-    onOutClick();
     navigate(`/${item.path}`);
-  };
-
-  const handleLogout = () => {
-    Cookies.remove("token");
-    sessionStorage.clear();
-    navigate("/login");
   };
 
   useEffect(() => {
@@ -91,54 +78,16 @@ export default function SideBar({ onClose, onOutClick }) {
   }, [selectedItem]);
 
   return (
-    <Box p={3} width="18vw" position="relative">
-      <IconButton
-        onClick={onClose}
-        sx={{ position: "absolute", top: 10, right: 10 }}
-      >
-        <PiXBold size={24} />
-      </IconButton>
-      <Stack gap={5} alignItems="center" mt={8}>
-        <Stack gap={1} alignItems="center">
-          <img
-            src="kejagung.svg"
-            alt="logo kejagung"
-            style={{ height: 133, objectFit: "contain" }}
-          />
-          <Typography
-            variant="h5"
-            color="#058039"
-            fontWeight={600}
-            fontFamily="Roboto"
-          >
-            Kejaksaan Agung
-          </Typography>
-          <Typography
-            variant="h6"
-            color="#058039"
-            fontWeight={600}
-            fontFamily="Roboto"
-          >
-            Republik Indonesia
-          </Typography>
-        </Stack>
-        <Stack width="100%" gap={1}>
-          {MENU_ITEMS.map((item) => (
-            <MenuItem
-              key={item.key}
-              isActive={selectedItem === item.key}
-              label={item.label}
-              icon={item.icon}
-              onClick={() => handleClick(item)}
-            />
-          ))}
+    <Box width={120} bgcolor="#33714ECC" minHeight="100vw">
+      <Stack gap={2} position="sticky" top={80}>
+        {MENU_ITEMS.map((menu) => (
           <MenuItem
-            isActive={selectedItem === MENU_ITEMS.length}
-            label="Logout"
-            icon={<PiSignOutBold />}
-            onClick={handleLogout}
+            key={menu.key}
+            isActive={selectedItem === menu.key}
+            icon={menu.icon}
+            onClick={() => handleClick(menu)}
           />
-        </Stack>
+        ))}
       </Stack>
     </Box>
   );
