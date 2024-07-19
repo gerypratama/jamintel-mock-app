@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import DashCard from "../components/elements/DashCard";
+import HeatMap from "../components/elements/Heatmap";
 
 export default function Dashboard() {
   return (
@@ -59,23 +60,7 @@ export default function Dashboard() {
           </Grid>
         </Grid>
         <Grid item xs={7}>
-          <Card sx={{ minHeight: 424 }}>
-            <CardHeader
-              titleTypographyProps={{ variant: "h7" }}
-              title="Peta Persebaran Buronan"
-              sx={{
-                fontWeight: 700,
-                color: "353229",
-              }}
-            />
-            <CardMedia
-              component="img"
-              height="250"
-              image="/id_map.svg"
-              alt={"map"}
-              sx={{ objectFit: "contain" }}
-            />
-          </Card>
+          <HeatMap />
         </Grid>
       </Grid>
     </Stack>

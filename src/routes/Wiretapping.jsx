@@ -43,9 +43,6 @@ export default function Wiretapping() {
         <Grid item xs={12}>
           <CardMap />
         </Grid>
-        <Grid item xs={12}>
-          <HeatMap />
-        </Grid>
       </Grid>
     </Stack>
   );

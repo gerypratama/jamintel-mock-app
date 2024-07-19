@@ -34,7 +34,7 @@ function HeatMap() {
   const map = useRef(null);
   const [lng, setLng] = useState(117.5);
   const [lat, setLat] = useState(-2.5);
-  const [zoom, setZoom] = useState(5);
+  const [zoom, setZoom] = useState(3);
 
   useEffect(() => {
     if (!map.current) {
@@ -84,16 +84,17 @@ function HeatMap() {
   }, []);
 
   return (
-    <Card height="100%" width="100%" sx={{ bgcolor: "whitesmoke" }}>
+    <Card sx={{ bgcolor: "whitesmoke" }}>
       <CardHeader
-        title="Heatmap"
-        sx={{
-          fontWeight: 600,
-          color: "#028f41",
-        }}
+       titleTypographyProps={{ variant: "h7" }}
+       title="Peta Persebaran Buronan"
+       sx={{
+         fontWeight: 700,
+         color: "#353229",
+       }}
       />
 
-      <Box width="100%" height={600} position="relative">
+      <Box width="100%" height={394} position="relative">
         <div
           ref={mapContainer}
           className="map-container"

@@ -7,13 +7,11 @@ export default function DashCard({ bgCol, txtCol, title, content }) {
     <Card sx={{ bgcolor: bgCol, color: txtCol }}>
       <CardHeader
         title={title}
-        sx={{
-          fontSize: 20,
+        titleTypographyProps={{fontSize: 20,
           fontWeight: 700,
           textAlign: "center",
-          pt: 4,
-        }}
-      />
+          pt: 4,}}
+        />
       <CardContent
         sx={{
           fontSize: 60,
