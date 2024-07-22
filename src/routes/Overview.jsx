@@ -26,12 +26,8 @@ export default function Overview() {
     no_rek: "",
     email: "",
     tgl_cctv: "2020-11-23",
-    start_date: `${dayjs(dates.start).year().toString()}-${(
-      dayjs(dates.start).month() + 1
-    ).toString()}`,
-    end_date: `${dayjs(dates.end).year().toString()}-${(
-      dayjs(dates.end).month() + 1
-    ).toString()}`,
+    start_date: `${dayjs(dates.start).format("YYYY-MM")}`,
+    end_date: `${dayjs(dates.end).format("YYYY-MM")}`,
   });
   const [tableUrl, setTableUrl] = useState({
     nik: `nik-web?nik=${
@@ -82,12 +78,8 @@ export default function Overview() {
   useEffect(() => {
     setGraphParams((prev) => ({
       ...prev,
-      start_date: `${dayjs(dates.start).year().toString()}-${(
-        dayjs(dates.start).month() + 1
-      ).toString()}`,
-      end_date: `${dayjs(dates.end).year().toString()}-${(
-        dayjs(dates.end).month() + 1
-      ).toString()}`,
+      start_date: `${dayjs(dates.start).format("YYYY-MM")}`,
+      end_date: `${dayjs(dates.end).format("YYYY-MM")}`,
     }));
   }, [dates]);
 
